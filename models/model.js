@@ -1,4 +1,5 @@
 const axios = require("axios");
+const DB = require("../models/dbConnection");
 
 require("dotenv").config();
 
@@ -30,6 +31,24 @@ const googleCallBack = async (code) => {
         headers: { Authorization: `Bearer ${access_token}` },
       }
     );
+
+    const userData = {
+      name: profile.name,
+      social_id: profile.id,
+      email: profile.email,
+      provider: "Google",
+    };
+
+    // Construct SQL query with placeholders
+    const sql =
+      "INSERT INTO users (name, social_id, email, provider) VALUES (?, ?, ?, ?)";
+    // Pass parameter values as an array
+    const params = [
+      userData.name,
+      userData.social_id,
+      userData.email,
+      userData.provider,
+    ];
 
     console.log(data, profile);
   } catch (error) {
