@@ -60,7 +60,6 @@ const bundleDelete = async (id) => {
   try {
     const sql = `DELETE FROM bundle WHERE dev_path_id=?`;
     const result = await DB.query(sql, [id]);
-    // let message = "";
     if (result.affectedRows) {
       message = `Bundle-ID : ${id}  deleted successfully`;
     }
@@ -84,7 +83,11 @@ const bundleDetail = async (id) => {
 
 const bundleDetails = async (id) => {
   try {
-    const sql = `SELECT `;
+    const sql = `SELECT * FROM bundle where dev_path_id=? `;
+    const result = await DB.query(sql, [id]);
+    const sql1 = `SELECT * FROM Patch where bundle_id=?`;
+    const result1 = await DB.query(sql1, [id]);
+    return { result, result1 };
   } catch (error) {
     console.error("Error in Bundle Model Detail:", error);
     throw error;
@@ -97,4 +100,5 @@ module.exports = {
   bundleUpdate,
   bundleDelete,
   bundleDetail,
+  bundleDetails
 };

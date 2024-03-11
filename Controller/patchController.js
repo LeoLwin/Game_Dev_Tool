@@ -35,10 +35,10 @@ const patchDelete = async (req, res) => {
   try {
     const result = await Patch.patchDelete(req.params.id);
     res.status(200).json({ result });
-    // console.log("Hello")
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 module.exports = { patchCreate, patchList, patchUpdate, patchDelete };

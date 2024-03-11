@@ -52,10 +52,20 @@ const bundleDetail = async (req, res) => {
   }
 };
 
+const bundleDetails = async (req, res) => {
+  try {
+    const result = await Bundle.bundleDetails(req.params.id);
+    res.status(200).json({ result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   bundleCreate,
   bundleList,
   bundleUpdate,
   bundleDelete,
   bundleDetail,
+  bundleDetails,
 };
