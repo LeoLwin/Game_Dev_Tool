@@ -48,4 +48,9 @@ const patchDelete = async (id) => {
   }
 };
 
-module.exports = { patchCreate, patchList, patchUpdate, patchDelete };
+module.exports = {
+  patchCreate,
+  patchList,
+  patchUpdate,
+  patchDelete,
+};
