@@ -1,5 +1,7 @@
 const Patch = require("../models/patchModel");
 const unzipper = require("unzipper");
+const fs = require("fs-extra");
+const path = require("path");
 
 const multer = require("multer");
 
@@ -40,6 +42,24 @@ const uploadFile = async (req, res) => {
     // Handle other errors
     res.status(500).json({ message: error.message });
   }
+};
+
+const fileRead = async (req, res) => {
+  const uploadFolderPath = path.join(__dirname, "../uploads");
+  fs.readdir(uploadFolderPath, (err, files) => {
+    if (err) {
+      console.error("Error reading upload folder:", err);
+      res.status(500).json({ error: "Failed to read upload folder" });
+      return;
+    }
+
+    const fileData = files.map((file) => ({
+      filename: file,
+      path: path.join(uploadFolderPath, file),
+    }));
+
+    res.json({ files: fileData });
+  });
 };
 
 // const uploadFile = async (req, res) => {
@@ -138,4 +158,5 @@ module.exports = {
   patchUpdate,
   patchDelete,
   uploadFile,
+  fileRead,
 };
