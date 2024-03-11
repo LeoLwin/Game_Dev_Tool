@@ -13,7 +13,7 @@ const googleLogin = async () => {
     console.error("Error in Google login:", error);
     throw error;
   }
-};
+}; 
 
 const googleCallBack = async (code) => {
   try {
