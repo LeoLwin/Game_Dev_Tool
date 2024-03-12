@@ -1,3 +1,4 @@
+require("dotenv").config();
 const fs = require("fs-extra");
 const path = require("path");
 
@@ -82,7 +83,37 @@ const fileDelete = async (req, res) => {
   }
 };
 
-module.exports = { fileUpload, fileDelete, fileRead };
+
+const uploadFileS3 = (fileName) => {
+//   // Create a read stream from the file
+//   const fileContent = fs.createReadStream(Test/fileName);
+
+//   const params = {
+//     Bucket: "khl-image-upload-tutorial",
+//     Key: Test, // Use fileName as the key
+//     Body: fileContent,
+//   };
+
+//   s3.upload(params, (err, data) => {
+//     if (err) {
+//       console.error("Error uploading file:", err);
+//     } else {
+//       console.log(`File uploaded successfully. ${data.Location}`);
+//     }
+//   });
+};
+
+const uploadFileS3COn = async (req, res) => {
+//   try {
+//     const { fileName } = req.body; // Assuming fileName is passed in the request body
+//     await uploadFileS3(fileName);
+//     res.status(200).json({ message: "File uploaded successfully" });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+};
+
+module.exports = { fileUpload, fileDelete, fileRead, uploadFileS3COn };
 
 // const fileUpload = async (req, res) => {
 //   try {

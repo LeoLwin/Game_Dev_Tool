@@ -1,6 +1,4 @@
 const Bundle = require("../models/bundleModel");
-const AWS = require('aws-sdk');
-
 
 const bundleCreate = async (req, res) => {
   try {
