@@ -7,6 +7,7 @@ const {
   patchDelete,
   uploadFile,
   fileRead,
+  fileDelete,
 } = require("../Controller/patchController");
 
 router.route("/createPatch").post(patchCreate);
@@ -15,5 +16,6 @@ router.route("/updatePatch/:id").put(patchUpdate);
 router.route("/deletePatch/:id").delete(patchDelete);
 router.route("/fileUpload").post(uploadFile);
 router.route("/readFile").get(fileRead);
+router.route("/deleteFile").delete(fileDelete);
 
 module.exports = router;

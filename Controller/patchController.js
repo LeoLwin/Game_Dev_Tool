@@ -36,7 +36,11 @@ const uploadFile = async (req, res) => {
       }
       // File uploaded successfully
       const file = req.file;
-      res.status(200).json({ message: "File uploaded successfully", file });
+      const filePath = req.protocol + "://" + req.get("host") + "/" + file.path;
+
+      res
+        .status(200)
+        .json({ message: "File uploaded successfully", file, filePath });
     });
   } catch (error) {
     // Handle other errors
@@ -60,6 +64,24 @@ const fileRead = async (req, res) => {
 
     res.json({ files: fileData });
   });
+};
+
+const fileDelete = async (req, res) => {
+  try {
+    const filePath = req.body.filePath;
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error("Error deleting file:", err);
+        // Handle error while deleting file
+        res.status(500).json({ message: err });
+      } else {
+        console.log("File deleted successfully");
+        res.status(200).json("File deleted successfully");
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 // const uploadFile = async (req, res) => {
@@ -159,4 +181,5 @@ module.exports = {
   patchDelete,
   uploadFile,
   fileRead,
+  fileDelete,
 };
