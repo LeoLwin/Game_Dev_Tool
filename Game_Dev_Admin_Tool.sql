@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `Game_Dev_Admin_Tool`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `Game_Dev_Admin_Tool` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+USE `Game_Dev_Admin_Tool`;
+
+--
 -- Table structure for table `Patch`
 --
 
@@ -109,4 +117,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-12 15:46:04
+-- Dump completed on 2024-03-12 15:52:35
