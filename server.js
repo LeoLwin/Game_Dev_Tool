@@ -6,6 +6,7 @@ PORT = process.env.PORT || 2000;
 const login = require("./routes/userRoute");
 const bundle = require("./routes/bundleRoute");
 const patch = require("./routes/patchRoute");
+const upload = require("./routes/uploadRoute");
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 app.use("/login", login);
 app.use("/bundle", bundle);
 app.use("/patch", patch);
+app.use("/upload", upload);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
