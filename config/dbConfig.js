@@ -1,6 +1,7 @@
+require("dotenv").config();
 module.exports = {
-  host: "localhost",
-  user: "root",
-  password: "12345@Kaung",
-  database: "Game_Dev_Admin_Tool",
+  host: process.env.host,
+  user: process.env.user,
+  password: process.env.password,
+  database: process.env.database,
 };

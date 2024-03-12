@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.529.1",
     "adm-zip": "^0.5.10",
     "axios": "^1.6.7",
     "cors": "^2.8.5",
