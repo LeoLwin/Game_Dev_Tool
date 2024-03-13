@@ -4,13 +4,13 @@ const jwt = require("jsonwebtoken");
 
 const bundleCreate = async (data) => {
   try {
-    const { name, type, prod_path_id, orientation, index_fileName } = data;
+    const { name, type, prod_patch_id, orientation, index_fileName } = data;
     const sql =
-      "INSERT INTO bundle (name, type, prod_path_id, orientation ,index_fileName) VALUES(?,?,?,?,?)";
+      "INSERT INTO bundle (name, type, prod_patch_id, orientation ,index_fileName) VALUES(?,?,?,?,?)";
     const result = await DB.query(sql, [
       name,
       type,
-      prod_path_id,
+      prod_patch_id,
       orientation,
       index_fileName,
     ]);
@@ -25,7 +25,7 @@ const bundleCreate = async (data) => {
 const bundleList = async (pages) => {
   try {
     const page = parseInt(pages);
-    const PAGE_SIZE = 5; // Number of messages per page
+    const PAGE_SIZE = 10; // Number of messages per page
     const offset = (page - 1) * PAGE_SIZE;
     const sql = `SELECT * FROM bundle LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
     const result = await DB.query(sql);
@@ -38,13 +38,13 @@ const bundleList = async (pages) => {
 
 const bundleUpdate = async (id, data) => {
   try {
-    const { name, type, prod_path_id, orientation, index_fileName } = data;
+    const { name, type, prod_patch_id, orientation, index_fileName } = data;
 
-    const sql = `UPDATE bundle SET name=?, type=?, prod_path_id=?, orientation=?, index_fileName=? WHERE dev_path_id=?`;
+    const sql = `UPDATE bundle SET name=?, type=?, prod_patch_id=?, orientation=?, index_fileName=? WHERE dev_path_id=?`;
     const result = await DB.query(sql, [
       name,
       type,
-      prod_path_id,
+      prod_patch_id,
       orientation,
       index_fileName,
       id,

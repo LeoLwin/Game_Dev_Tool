@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 const googleLogin = async (req, res) => {
   try {
     const url = await User.googleLogin();
-    res.status(200).json({ url });
+    res.redirect(url);
   } catch (error) {
     console.error("Error in Google login:", error);
     res.status(500).json({ message: error.message });
