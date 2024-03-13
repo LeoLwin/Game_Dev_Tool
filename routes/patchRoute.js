@@ -5,6 +5,7 @@ const {
   patchList,
   patchUpdate,
   patchDelete,
+  patchByBundle_Id,
 } = require("../Controller/patchController");
 
 // const validateToken = require("../middleware/validateToken");
@@ -15,5 +16,6 @@ router.route("/createPatch").post(patchCreate);
 router.route("/listPatch").get(patchList);
 router.route("/updatePatch/:id").put(patchUpdate);
 router.route("/deletePatch/:id").delete(patchDelete);
+router.route("/patchByBundle_Id/:id").get(patchByBundle_Id);
 
 module.exports = router;

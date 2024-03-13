@@ -48,9 +48,20 @@ const patchDelete = async (id) => {
   }
 };
 
+const patchByBundle_Id = async (id) => {
+  try {
+    const sql1 = `SELECT * FROM Patch where bundle_id=?`;
+    const result = await DB.query(sql1, [id]);
+    return result;
+  } catch (error) {
+    console.error("Error in Patch Model Create:", error);
+    throw error;
+  }
+};
 module.exports = {
   patchCreate,
   patchList,
   patchUpdate,
   patchDelete,
+  patchByBundle_Id,
 };

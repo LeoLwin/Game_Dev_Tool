@@ -41,9 +41,19 @@ const patchDelete = async (req, res) => {
   }
 };
 
+const patchByBundle_Id = async (req, res) => {
+  try {
+    const result = await Patch.patchByBundle_Id(req.params.id);
+    res.status(200).json({ result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   patchCreate,
   patchList,
   patchUpdate,
   patchDelete,
+  patchByBundle_Id
 };
