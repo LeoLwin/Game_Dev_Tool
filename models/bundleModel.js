@@ -40,7 +40,7 @@ const bundleUpdate = async (id, data) => {
   try {
     const { name, type, prod_patch_id, orientation, index_fileName } = data;
 
-    const sql = `UPDATE bundle SET name=?, type=?, prod_patch_id=?, orientation=?, index_fileName=? WHERE dev_path_id=?`;
+    const sql = `UPDATE bundle SET name=?, type=?, prod_patch_id=?, orientation=?, index_fileName=? WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [
       name,
       type,
@@ -58,7 +58,7 @@ const bundleUpdate = async (id, data) => {
 
 const bundleDelete = async (id) => {
   try {
-    const sql = `DELETE FROM bundle WHERE dev_path_id=?`;
+    const sql = `DELETE FROM bundle WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [id]);
     if (result.affectedRows) {
       message = `Bundle-ID : ${id}  deleted successfully`;
@@ -72,22 +72,10 @@ const bundleDelete = async (id) => {
 
 const bundleDetail = async (id) => {
   try {
-    const sql = `SELECT * FROM bundle WHERE dev_path_id=?`;
+    const sql = `SELECT * FROM bundle WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [id]);
-    return result;
-  } catch (error) {
-    console.error("Error in Bundle Model Detail:", error);
-    throw error;
-  }
-};
-
-const bundleDetails = async (id) => {
-  try {
-    const sql = `SELECT * FROM bundle where dev_path_id=? `;
-    const result = await DB.query(sql, [id]);
-    const sql1 = `SELECT * FROM Patch where bundle_id=?`;
-    const result1 = await DB.query(sql1, [id]);
-    return {result, result1};
+    const bundleD = result[0];
+    return bundleD;
   } catch (error) {
     console.error("Error in Bundle Model Detail:", error);
     throw error;
@@ -100,5 +88,4 @@ module.exports = {
   bundleUpdate,
   bundleDelete,
   bundleDetail,
-  bundleDetails,
 };

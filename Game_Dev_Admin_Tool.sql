@@ -38,9 +38,9 @@ CREATE TABLE `Patch` (
   `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_patch_per_bundle` (`bundle_id`,`patch_id`),
-  CONSTRAINT `fk_patch_bundle` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`dev_path_id`),
-  CONSTRAINT `Patch_ibfk_1` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`dev_path_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_patch_bundle` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`dev_patch_id`),
+  CONSTRAINT `Patch_ibfk_1` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`dev_patch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `Patch` (
 
 LOCK TABLES `Patch` WRITE;
 /*!40000 ALTER TABLE `Patch` DISABLE KEYS */;
-INSERT INTO `Patch` VALUES (1,1,'Patchkk-98','2022-01-01 03:30:00','kaunghtdddet'),(2,1,'patch_2','2022-01-02 03:30:00','Remark for patch 2'),(3,2,'patch_3','2022-01-03 03:30:00','Remark for patch 3'),(4,3,'patch_4','2022-01-04 03:30:00','Remark for patch 4'),(5,3,'patch_5','2022-01-05 03:30:00','Remark for patch 5'),(6,1,'Patch555','2024-03-10 13:17:23','kdfkdfkd'),(9,2,'Patch555','2024-03-10 14:21:11','kdfkdfkd'),(10,3,'Patch555','2024-03-10 14:21:34','kdfkdfkd'),(13,1,'kkjkjoik','2024-03-12 03:16:41','kdfkdfkd');
+INSERT INTO `Patch` VALUES (1,1,'Patchkk-98','2022-01-01 03:30:00','kaunghtdddet'),(2,1,'patch_2','2022-01-02 03:30:00','Remark for patch 2'),(3,2,'patch_3','2022-01-03 03:30:00','Remark for patch 3'),(4,3,'patch_4','2022-01-04 03:30:00','Remark for patch 4'),(5,3,'patch_5','2022-01-05 03:30:00','Remark for patch 5'),(6,1,'Patch555','2024-03-10 13:17:23','kdfkdfkd'),(9,2,'Patch555','2024-03-10 14:21:11','kdfkdfkd'),(10,3,'Patch555','2024-03-10 14:21:34','kdfkdfkd'),(15,1,'kkjddddkjoik','2024-03-13 04:21:45','kdfkdfdfddszaakd');
 /*!40000 ALTER TABLE `Patch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,12 +63,12 @@ DROP TABLE IF EXISTS `bundle`;
 CREATE TABLE `bundle` (
   `name` varchar(255) NOT NULL,
   `type` enum('web','cocos') NOT NULL,
-  `prod_path_id` varchar(255) NOT NULL,
-  `dev_path_id` int NOT NULL AUTO_INCREMENT,
+  `prod_patch_id` varchar(255) NOT NULL,
+  `dev_patch_id` int NOT NULL AUTO_INCREMENT,
   `orientation` varchar(255) NOT NULL,
   `index_fileName` varchar(255) NOT NULL,
-  PRIMARY KEY (`dev_path_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`dev_patch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `bundle` (
 
 LOCK TABLES `bundle` WRITE;
 /*!40000 ALTER TABLE `bundle` DISABLE KEYS */;
-INSERT INTO `bundle` VALUES ('Bundle 1','web','prod_path_1',1,'orientation_1','index_fileName_1'),('Bundle 2','cocos','prod_path_2',2,'orientation_2','index_fileName_2'),('Bundle 3','web','prod_path_3',3,'orientation_3','index_fileName_3'),('nananaananan','cocos','a/a/a/a/',4,'kkk','kkkkkkkfdfd'),('maw','cocos','a/a/a/a/',5,'kkkk','kkkkkkkfdfd'),('zaw','cocos','a/a/a/a/',6,'kkkk','kkkkkkkfdfd'),('john','cocos','a/a/a/a/',7,'kkkk','kkkkkkkfdfd'),('marry','cocos','a/a/a/a/',8,'kkkk','kkkkkkkfdfd'),('ballon','cocos','a/a/a/a/',9,'kkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',10,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',11,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',12,'kkkk','kkkkkkkfdfd');
+INSERT INTO `bundle` VALUES ('gigigroad','web','a/a/ikop=/a/',1,'kdfddkk','kkkkkkkiue41fdfd'),('Bundle 2','cocos','prod_path_2',2,'orientation_2','index_fileName_2'),('ballodddn','cocos','a/a/a/a/',3,'kkk','kkkkkkkfdfd'),('maw','cocos','a/a/a/a/',5,'kkkk','kkkkkkkfdfd'),('zaw','cocos','a/a/a/a/',6,'kkkk','kkkkkkkfdfd'),('john','cocos','a/a/a/a/',7,'kkkk','kkkkkkkfdfd'),('marry','cocos','a/a/a/a/',8,'kkkk','kkkkkkkfdfd'),('ballon','cocos','a/a/a/a/',9,'kkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',10,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',11,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',12,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',13,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',14,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',15,'kkkk','ddfdfd'),('gigi','cocos','a/a/a/a/',16,'kkkk','ddfdfd'),('htay','cocos','a/a/admfd/a/',17,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',18,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',19,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',20,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',21,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',22,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',23,'kkddkk','dfdf'),('htay','cocos','a/a/admfd/a/',24,'kkddkk','dfdf'),('htay','cocos','a/a/admfd/a/',25,'kkddkk','dfdf'),('girod','web','a/a/admfd/a/',26,'kkddkoosk','dfjyufdkqlkdf');
 /*!40000 ALTER TABLE `bundle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,4 +117,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-12 15:52:35
+-- Dump completed on 2024-03-13 14:10:36

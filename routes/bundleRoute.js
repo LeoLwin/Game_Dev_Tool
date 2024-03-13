@@ -6,7 +6,6 @@ const {
   bundleUpdate,
   bundleDelete,
   bundleDetail,
-  bundleDetails,
 } = require("../Controller/bundleController");
 
 // const validateToken = require("../middleware/validateToken");
@@ -18,5 +17,4 @@ router.route("/listBundle/:page").get(bundleList);
 router.route("/updateBundle/:id").put(bundleUpdate);
 router.route("/deleteBundle/:id").delete(bundleDelete);
 router.route("/detailBundle/:id").get(bundleDetail);
-router.route("/detailsBundle/:id").get(bundleDetails);
 module.exports = router;
