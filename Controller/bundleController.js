@@ -5,7 +5,7 @@ const bundleCreate = async (req, res) => {
     if (!req.body)
       return res.status(400).json({ message: "Request body is empty!" });
     const result = await Bundle.bundleCreate(req.body);
-    res.status(200).json({ result });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -38,7 +38,7 @@ const bundleUpdate = async (req, res) => {
 const bundleDelete = async (req, res) => {
   try {
     const result = await Bundle.bundleDelete(req.params.id);
-    res.status(200).json({ result });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

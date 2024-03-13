@@ -6,7 +6,7 @@ const patchCreate = async (req, res) => {
     if (!req.body)
       return res.status(400).json({ message: "Request body is empty!" });
     const result = await Patch.patchCreate(req.body);
-    res.status(200).json({ result });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -15,7 +15,7 @@ const patchCreate = async (req, res) => {
 const patchList = async (req, res) => {
   try {
     const result = await Patch.patchList();
-    res.status(200).json({ result });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -26,7 +26,7 @@ const patchUpdate = async (req, res) => {
     if (!req.body)
       return res.status(400).json({ message: "Request body is empty!" });
     const result = await Patch.patchUpdate(req.params.id, req.body);
-    res.status(200).json({ result });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -35,7 +35,7 @@ const patchUpdate = async (req, res) => {
 const patchDelete = async (req, res) => {
   try {
     const result = await Patch.patchDelete(req.params.id);
-    res.status(200).json({ result });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -44,7 +44,7 @@ const patchDelete = async (req, res) => {
 const patchByBundle_Id = async (req, res) => {
   try {
     const result = await Patch.patchByBundle_Id(req.params.id);
-    res.status(200).json({ result });
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -55,5 +55,5 @@ module.exports = {
   patchList,
   patchUpdate,
   patchDelete,
-  patchByBundle_Id
+  patchByBundle_Id,
 };
