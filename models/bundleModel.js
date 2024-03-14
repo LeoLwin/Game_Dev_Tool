@@ -2,9 +2,14 @@ require("dotenv").config();
 const DB = require("./dbConnection");
 const jwt = require("jsonwebtoken");
 
-const bundleCreate = async (data) => {
+const bundleCreate = async (
+  name,
+  type,
+  prod_patch_id,
+  orientation,
+  index_fileName
+) => {
   try {
-    const { name, type, prod_patch_id, orientation, index_fileName } = data;
     const sql =
       "INSERT INTO bundle (name, type, prod_patch_id, orientation ,index_fileName) VALUES(?,?,?,?,?)";
     const result = await DB.query(sql, [
@@ -36,10 +41,16 @@ const bundleList = async (pages) => {
   }
 };
 
-const bundleUpdate = async (id, data) => {
+const bundleUpdate = async (
+  id,
+  name,
+  type,
+  prod_patch_id,
+  orientation,
+  index_fileName
+) => {
   try {
-    const { name, type, prod_patch_id, orientation, index_fileName } = data;
-
+    
     const sql = `UPDATE bundle SET name=?, type=?, prod_patch_id=?, orientation=?, index_fileName=? WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [
       name,
@@ -47,7 +58,7 @@ const bundleUpdate = async (id, data) => {
       prod_patch_id,
       orientation,
       index_fileName,
-      id,
+      id
     ]);
     return result;
   } catch (error) {

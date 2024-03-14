@@ -3,9 +3,12 @@ const unzipper = require("unzipper");
 
 const patchCreate = async (req, res) => {
   try {
-    if (!req.body)
-      return res.status(400).json({ message: "Request body is empty!" });
-    const result = await Patch.patchCreate(req.body);
+    const { bundle_id, patch_id, remark } = req.body;
+    if (bundle_id == "" || patch_id == "" || remark == "")
+      return res
+        .status(400)
+        .json({ message: "Please provide all required fields" });
+    const result = await Patch.patchCreate(bundle_id, patch_id, remark);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -23,10 +26,16 @@ const patchList = async (req, res) => {
 
 const patchUpdate = async (req, res) => {
   try {
-    if (!req.body)
-      return res.status(400).json({ message: "Request body is empty!" });
-    const result = await Patch.patchUpdate(req.params.id, req.body);
+    const { patch_id, remark } = req.body;
+    const { id } = req.params;
+
+    if (patch_id == "" || remark == "")
+      return res
+        .status(400)
+        .json({ message: "Please provide all required fields" });
+    const result = await Patch.patchUpdate(id, patch_id, remark);
     res.status(200).json(result);
+    // res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

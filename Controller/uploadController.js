@@ -84,6 +84,26 @@ const fileDelete = async (req, res) => {
   }
 };
 
+const checkFileInZip = async (zipFilePath, fileName) => {
+  return new Promise((resolve, reject) => {
+    fs.createReadStream(zipFilePath)
+      .pipe(unzipper.Parse())
+      .on("entry", (entry) => {
+        if (entry.path === fileName) {
+          resolve(true);
+        } else {
+          entry.autodrain();
+        }
+      })
+      .on("error", (err) => {
+        reject(err);
+      })
+      .on("finish", () => {
+        resolve(false);
+      });
+  });
+};
+
 const unzip = async (req, res) => {
   upload.single("file")(req, res, function (err) {
     if (err) {
@@ -97,25 +117,83 @@ const unzip = async (req, res) => {
 
     const zipFilePath = req.file.path;
     const extractDir = "./uploads";
+    const fileNameToCheck = "khl.txt"; // Specify the file name you want to check
 
-    fs.createReadStream(zipFilePath)
-      .pipe(unzipper.Extract({ path: extractDir }))
-      .on("error", (err) => {
-        res.status(500).json({ error: "Error unzipping file", details: err });
-      })
-      .on("finish", () => {
-        // Delete the original zip file
-        fs.unlink(zipFilePath, (unlinkErr) => {
-          if (unlinkErr) {
-            console.error("Error deleting zip file:", unlinkErr);
-          }
-          
-          res.status(200).json({
-            message: "File unzipped successfully",zipFilePath
+    checkFileInZip(zipFilePath, fileNameToCheck)
+      .then((exists) => { 
+        if (!exists) {
+          fs.unlink(zipFilePath, (unlinkErr) => {
+            if (unlinkErr) {
+              console.error("Error deleting zip file:", unlinkErr);
+            }
+            res.status(200).json({
+              message: "File unzipped successfully",
+              zipFilePath,
+            });
           });
-        });
+          return res.status(404).json({ message: "File not found in zip" });
+        } else
+          fs.createReadStream(zipFilePath)
+            .pipe(unzipper.Extract({ path: extractDir }))
+            .on("error", (err) => {
+              res
+                .status(500)
+                .json({ error: "Error unzipping file", details: err });
+            })
+            .on("finish", () => {
+              // Delete the original zip file
+              fs.unlink(zipFilePath, (unlinkErr) => {
+                if (unlinkErr) {
+                  console.error("Error deleting zip file:", unlinkErr);
+                }
+                res.status(200).json({
+                  message: "File unzipped successfully",
+                  zipFilePath,
+                });
+              });
+            });
+      })
+      .catch((err) => {
+        res
+          .status(500)
+          .json({ error: "Error checking file in zip", details: err });
       });
   });
 };
+
+// const unzip = async (req, res) => {
+//   upload.single("file")(req, res, function (err) {
+//     if (err) {
+//       // Handle multer errors
+//       return res.status(500).json({ message: err.message });
+//     }
+
+//     if (!req.file) {
+//       return res.status(400).json({ message: "No file uploaded" });
+//     }
+
+//     const zipFilePath = req.file.path;
+//     const extractDir = "./uploads";
+
+//     fs.createReadStream(zipFilePath)
+//       .pipe(unzipper.Extract({ path: extractDir }))
+//       .on("error", (err) => {
+//         res.status(500).json({ error: "Error unzipping file", details: err });
+//       })
+//       .on("finish", () => {
+//         // Delete the original zip file
+//         fs.unlink(zipFilePath, (unlinkErr) => {
+//           if (unlinkErr) {
+//             console.error("Error deleting zip file:", unlinkErr);
+//           }
+
+//           res.status(200).json({
+//             message: "File unzipped successfully",
+//             zipFilePath,
+//           });
+//         });
+//       });
+//   });
+// };
 
 module.exports = { fileUpload, fileDelete, fileRead, unzip };
