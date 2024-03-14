@@ -1,7 +1,7 @@
 require("dotenv").config();
 const fs = require("fs-extra");
 const path = require("path");
-const decompress = require("decompress");
+const unzipper = require("unzipper");
 
 const multer = require("multer");
 
@@ -26,27 +26,27 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-// const fileUpload = async (req, res) => {
-//   try {
-//     // Handle single file upload using multer middleware
-//     upload.single("file")(req, res, function (err) {
-//       if (err) {
-//         // Handle multer errors
-//         return res.status(500).json({ message: err.message });
-//       }
-//       // File uploaded successfully
-//       const file = req.file;
-//       const filePath = req.protocol + "://" + req.get("host") + "/" + file.path;
+const fileUpload = async (req, res) => {
+  try {
+    // Handle single file upload using multer middleware
+    upload.single("file")(req, res, function (err) {
+      if (err) {
+        // Handle multer errors
+        return res.status(500).json({ message: err.message });
+      }
+      // File uploaded successfully
+      const file = req.file;
+      const filePath = req.protocol + "://" + req.get("host") + "/" + file.path;
 
-//       res
-//         .status(200)
-//         .json({ message: "File uploaded successfully", file, filePath });
-//     });
-//   } catch (error) {
-//     // Handle other errors
-//     res.status(500).json({ message: error.message });
-//   }
-// };
+      res
+        .status(200)
+        .json({ message: "File uploaded successfully", file, filePath });
+    });
+  } catch (error) {
+    // Handle other errors
+    res.status(500).json({ message: error.message });
+  }
+};
 
 const fileRead = async (req, res) => {
   const uploadFolderPath = path.join(__dirname, "../uploads");
@@ -84,58 +84,38 @@ const fileDelete = async (req, res) => {
   }
 };
 
-const fileUpload = async (req, res) => {
-  try {
-    // Handle single file upload using multer middleware
-    upload.single("file")(req, res, async function (err) {
-      if (err) {
-        // Handle multer errors
-        return res.status(500).json({ message: err.message });
-      }
-      const zipFile = req.file;
-      console.log(zipFile.buffer);
-      // const buffer = req.file.buffer;
-      // console.log(buffer);
+const unzip = async (req, res) => {
+  upload.single("file")(req, res, function (err) {
+    if (err) {
+      // Handle multer errors
+      return res.status(500).json({ message: err.message });
+    }
 
-      // Check if req.file is defined and has a buffer property
-      // if (!req.file || !req.file.buffer) {
-      //   return res.status(400).json({
-      //     message: "Uploaded file is missing or empty",
-      //   });
-      // }
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
 
-      // File uploaded successfully
+    const zipFilePath = req.file.path;
+    const extractDir = "./uploads";
 
-      try {
-        // const extractedFiles = [];
-        // const archive = await unzipper.Open.buffer(zipFile.buffer);
-
-        // // Iterate through each file in the archive
-        // await Promise.all(
-        //   archive.files.map(async (file) => {
-        //     const content = await file.buffer();
-        //     extractedFiles.push({
-        //       fileName: file.path,
-        //       fileContent: content.toString(),
-        //     });
-        //   })
-        // );
-        const extractedFiles = await decompress(zipFile.buffer, "dist").then(
-          (files) => {
-            res
-              .status(200)
-              .json({ message: "File uploaded successfully", files });
+    fs.createReadStream(zipFilePath)
+      .pipe(unzipper.Extract({ path: extractDir }))
+      .on("error", (err) => {
+        res.status(500).json({ error: "Error unzipping file", details: err });
+      })
+      .on("finish", () => {
+        // Delete the original zip file
+        fs.unlink(zipFilePath, (unlinkErr) => {
+          if (unlinkErr) {
+            console.error("Error deleting zip file:", unlinkErr);
           }
-        );
-      } catch (error) {
-        // Handle unzipper errors
-        res.status(500).json({ message: error.message });
-      }
-    });
-  } catch (error) {
-    // Handle other errors
-    res.status(500).json({ message: error.message });
-  }
+          
+          res.status(200).json({
+            message: "File unzipped successfully",zipFilePath
+          });
+        });
+      });
+  });
 };
 
-module.exports = { fileUpload, fileDelete, fileRead };
+module.exports = { fileUpload, fileDelete, fileRead, unzip };

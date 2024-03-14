@@ -13,7 +13,7 @@ const googleLogin = async () => {
     console.error("Error in Google login:", error);
     throw error;
   }
-}; 
+};
 
 const googleCallBack = async (code) => {
   try {
@@ -51,12 +51,7 @@ const googleCallBack = async (code) => {
           process.env.JWT_SECRET,
           { expiresIn: "1h" }
         );
-        return {
-          success: true,
-          message: "User already registered",
-          accessToken,
-          user,
-        };
+        return accessToken;
       } else {
         const sql =
           "INSERT INTO user (name, social_id, email, provider) VALUES (?, ?, ?, ?)";
@@ -78,12 +73,7 @@ const googleCallBack = async (code) => {
           { expiresIn: "1h" }
         );
 
-        return {
-          success: true,
-          message: "User registered successfully",
-          accessToken,
-          profile,
-        };
+        return accessToken;
       }
     } catch (error) {
       console.error("Error in Google Callback:", error);

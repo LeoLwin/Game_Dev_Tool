@@ -4,6 +4,7 @@ const {
   fileUpload,
   fileRead,
   fileDelete,
+  unzip,
 } = require("../Controller/uploadController");
 
 // const validateToken = require("../middleware/validateToken");
@@ -13,5 +14,6 @@ const {
 router.route("/fileUpload").post(fileUpload);
 router.route("/fileRead").get(fileRead);
 router.route("/fileDelete").delete(fileDelete);
+router.route("/unizp").post(unzip);
 
 module.exports = router;
