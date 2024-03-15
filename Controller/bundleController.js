@@ -1,4 +1,5 @@
 const Bundle = require("../models/bundleModel");
+const StatusCode = require("../helper/status_code_helper");
 
 const bundleCreate = async (req, res) => {
   try {
@@ -11,9 +12,9 @@ const bundleCreate = async (req, res) => {
       orientation === "" ||
       index_fileName === ""
     ) {
-      return res
-        .status(400)
-        .json({ message: "Please provide all required fields" });
+      return res(
+        new StatusCode.INVALID_ARGUMENT("Please provide all required fields")
+      );
     }
     const result = await Bundle.bundleCreate(
       name,
@@ -22,7 +23,7 @@ const bundleCreate = async (req, res) => {
       orientation,
       index_fileName
     );
-    res.status(200).json(result);
+    res(new StatusCode.OK(result));
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -34,9 +35,9 @@ const bundleList = async (req, res) => {
       return res.status(400).json({ message: "Request Params is empty!" });
     const { page } = req.params;
     const result = await Bundle.bundleList(page);
-    res.status(200).json(result);
+    res(new StatusCode.OK(result));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res(new StatusCode.UNKNOWN());
   }
 };
 
@@ -52,9 +53,10 @@ const bundleUpdate = async (req, res) => {
       orientation == "" ||
       index_fileName == ""
     )
-      return res
-        .status(400)
-        .json({ message: "Please provide all required fields" });
+      return res(
+        new StatusCode.INVALID_ARGUMENT("Please provide all required fields")
+      );
+
     const result = await Bundle.bundleUpdate(
       id,
       name,
@@ -63,27 +65,27 @@ const bundleUpdate = async (req, res) => {
       orientation,
       index_fileName
     );
-    res.status(200).json(result);
+    res(new StatusCode.OK(result));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res(new StatusCode.UNKNOWN());
   }
 };
 
 const bundleDelete = async (req, res) => {
   try {
     const result = await Bundle.bundleDelete(req.params.id);
-    res.status(200).json(result);
+    res(new StatusCode.OK(result));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res(new StatusCode.UNKNOWN());
   }
 };
 
 const bundleDetail = async (req, res) => {
   try {
     const result = await Bundle.bundleDetail(req.params.id);
-    res.status(200).json(result);
+    res(new StatusCode.OK(result));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res(new StatusCode.UNKNOWN());
   }
 };
 
