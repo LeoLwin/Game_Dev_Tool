@@ -12,7 +12,7 @@ const bundleCreate = async (req, res) => {
       orientation === "" ||
       index_fileName === ""
     ) {
-      return res(
+      return res.json(
         new StatusCode.INVALID_ARGUMENT("Please provide all required fields")
       );
     }
@@ -23,9 +23,9 @@ const bundleCreate = async (req, res) => {
       orientation,
       index_fileName
     );
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
@@ -35,9 +35,9 @@ const bundleList = async (req, res) => {
       return res.status(400).json({ message: "Request Params is empty!" });
     const { page } = req.params;
     const result = await Bundle.bundleList(page);
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
@@ -53,7 +53,7 @@ const bundleUpdate = async (req, res) => {
       orientation == "" ||
       index_fileName == ""
     )
-      return res(
+      return res.json(
         new StatusCode.INVALID_ARGUMENT("Please provide all required fields")
       );
 
@@ -65,27 +65,27 @@ const bundleUpdate = async (req, res) => {
       orientation,
       index_fileName
     );
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
 const bundleDelete = async (req, res) => {
   try {
     const result = await Bundle.bundleDelete(req.params.id);
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
 const bundleDetail = async (req, res) => {
   try {
     const result = await Bundle.bundleDetail(req.params.id);
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 

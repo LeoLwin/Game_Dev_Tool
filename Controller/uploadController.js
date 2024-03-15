@@ -119,18 +119,67 @@ const toBase64 = async (req, res) => {
     if (!req.body) {
       return res.status(400).json({ message: "No file provided" });
     }
+
     const file = req.body.file;
-    console.log(file);
     const filePath = await toDecode(file);
-    const fileName = "khl" && "gg" && "bb&&";
-    const result = await checkFileInZip(filePath, fileName);
-    if (result) {
-      return res.status(400).json(result);
-    } else await deleteFile(filePath);
+    const fileNames = ["khl", "aa", "bb"]; // Array of file names to check
+
+    // Check if any file exists in the ZIP archive
+    const results = await Promise.all(
+      fileNames.map(async (fileName) => {
+        console.log(fileName);
+        console.log(filePath);
+        return await checkFileInZip(filePath, fileName); // Corrected to return the result
+      })
+    );
+
+    // Check if all files exist and no additional files are present
+    const allExist =
+      results.every((result) => result) && results.length === fileNames.length;
+
+    // if (allExist) {
+    //   // If all files exist and no additional files are present, return success message
+    //   return res
+    //     .status(200)
+    //     .json({
+    //       message: "All required files are present exactly as expected",
+    //     });
+    // } else {
+    //   // If not all files exist or additional files are present, return failure message
+    //   return res
+    //     .status(400)
+    //     .json({
+    //       message:
+    //         "One or more required files are missing or additional files exist",
+    //     });
+    // }
+    res.status(200).json(allExist);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+// const toBase64 = async (req, res) => {
+//   try {
+//     // Check if req.file is available
+//     if (!req.body) {
+//       return res.status(400).json({ message: "No file provided" });
+//     }
+//     const file = req.body.file;
+//     console.log(file);
+//     const filePath = await toDecode(file);
+//     const fileName = "khl" && "gg" && "bb&&";
+//     const result = await checkFileInZip(filePath, fileName);
+//     if (result) {
+//       return res.status(400).json(result);
+//     } else {
+//       // await deleteFile(filePath);
+//       return res.status("File Deleted Successfully");
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 
 // const unzip = async (req, res) => {
 //   upload.single("file")(req, res, function (err) {

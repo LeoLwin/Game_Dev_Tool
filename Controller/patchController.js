@@ -21,22 +21,22 @@ const patchCreate = async (req, res) => {
   try {
     const { bundle_id, patch_id, remark } = req.body;
     if (bundle_id == "" || patch_id == "" || remark == "")
-      return res(
+      return res.json(
         new StatusCode.INVALID_ARGUMENT("Please provide all required fields")
       );
     const result = await Patch.patchCreate(bundle_id, patch_id, remark);
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
 const patchList = async (req, res) => {
   try {
     const result = await Patch.patchList();
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
@@ -46,31 +46,31 @@ const patchUpdate = async (req, res) => {
     const { id } = req.params;
 
     if (patch_id == "" || remark == "")
-      return res(
+      return res.json(
         new StatusCode.INVALID_ARGUMENT("Please provide all required fields")
       );
     const result = await Patch.patchUpdate(id, patch_id, remark);
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
 const patchDelete = async (req, res) => {
   try {
     const result = await Patch.patchDelete(req.params.id);
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
 const patchByBundle_Id = async (req, res) => {
   try {
     const result = await Patch.patchByBundle_Id(req.params.id);
-    res(new StatusCode.OK(result));
+    res.json(new StatusCode.OK(result));
   } catch (error) {
-    res(new StatusCode.UNKNOWN());
+    res.json(new StatusCode.UNKNOWN());
   }
 };
 
