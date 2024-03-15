@@ -50,7 +50,6 @@ const bundleUpdate = async (
   index_fileName
 ) => {
   try {
-    
     const sql = `UPDATE bundle SET name=?, type=?, prod_patch_id=?, orientation=?, index_fileName=? WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [
       name,
@@ -58,7 +57,7 @@ const bundleUpdate = async (
       prod_patch_id,
       orientation,
       index_fileName,
-      id
+      id,
     ]);
     return result;
   } catch (error) {

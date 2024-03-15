@@ -1,10 +1,11 @@
 require("dotenv").config();
 const DB = require("./dbConnection");
 
-const patchCreate = async (bundle_id, patch_id, remark) => {
+const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
   try {
-    const sql = "INSERT INTO Patch (bundle_id, patch_id, remark) VALUES(?,?,?)";
-    const result = await DB.query(sql, [bundle_id, patch_id, remark]);
+    const sql =
+      "INSERT INTO Patch (bundle_id, patch_id, remark,file_Patch) VALUES(?,?,?,?)";
+    const result = await DB.query(sql, [bundle_id, patch_id, remark, file_PatchDecode]);
     return result;
   } catch (error) {
     console.error("Error in Patch Model Create:", error);

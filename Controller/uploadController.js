@@ -6,6 +6,7 @@ const multer = require("multer");
 const toDecode = require("../middleware/decodeUnicodeToFile");
 const fileFilter = require("../middleware/isZipFile");
 const deleteFile = require("../middleware/deleteFile");
+const checkFileInZip = require("../middleware/checkFIleZip");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -93,69 +94,48 @@ const fileDelete = async (req, res) => {
   }
 };
 
-const checkFileInZip = async (zipFilePath, fileName) => {
-  return new Promise((resolve, reject) => {
-    fs.createReadStream(zipFilePath)
-      .pipe(unzipper.Parse())
-      .on("entry", (entry) => {
-        if (entry.path === fileName) {
-          resolve(true);
-        } else {
-          entry.autodrain();
-        }
-      })
-      .on("error", (err) => {
-        reject(err);
-      })
-      .on("finish", () => {
-        resolve(false);
-      });
-  });
-};
-
-const toBase64 = async (req, res) => {
+const toBase64 = async (file) => {
   try {
     // Check if req.file is available
-    if (!req.body) {
-      return res.status(400).json({ message: "No file provided" });
-    }
+    // if (!req.body) {
+    //   return res.status(400).json({ message: "No file provided" });
+    // }
 
-    const file = req.body.file;
+    // const file = req.body.file;
+    console.log(file);
     const filePath = await toDecode(file);
-    const fileNames = ["khl", "aa", "bb"]; // Array of file names to check
+    const fileNames = ["khl", "gg", "bb"]; // Array of file names to check
 
     // Check if any file exists in the ZIP archive
     const results = await Promise.all(
       fileNames.map(async (fileName) => {
-        console.log(fileName);
-        console.log(filePath);
+        // console.log(fileName);
+        // console.log(filePath);
         return await checkFileInZip(filePath, fileName); // Corrected to return the result
       })
     );
-
+    console.log(`This is results : ${results}`);
+    console.log(`This is resluts.length : ${results.length}`);
+    console.log(`This is fileNames.length : ${fileNames.length}`);
     // Check if all files exist and no additional files are present
+
     const allExist =
       results.every((result) => result) && results.length === fileNames.length;
-
-    // if (allExist) {
-    //   // If all files exist and no additional files are present, return success message
-    //   return res
-    //     .status(200)
-    //     .json({
-    //       message: "All required files are present exactly as expected",
-    //     });
-    // } else {
-    //   // If not all files exist or additional files are present, return failure message
-    //   return res
-    //     .status(400)
-    //     .json({
-    //       message:
-    //         "One or more required files are missing or additional files exist",
-    //     });
-    // }
-    res.status(200).json(allExist);
+    console.log(allExist);
+    if (allExist) {
+      // If all files exist and no additional files are present, return success message
+      return filePath;
+    } else {
+      // If not all files exist or additional files are present, return failure message
+      console.log("False");
+      return {
+        message:
+          "One or more required files are missing or additional files exist",
+      };
+    }
+    // res.status(200).json(allExist);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return { message: error.message };
   }
 };
 

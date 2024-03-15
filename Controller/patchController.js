@@ -1,7 +1,6 @@
 const Patch = require("../models/patchModel");
 const unzipper = require("unzipper");
-const { unzip } = require("./uploadController");
-const StatusCode = require("../helper/status_code_helper");
+const { unzip, toBase64 } = require("./uploadController");
 
 // const patchCreate = async (req, res) => {
 //   try {
@@ -19,24 +18,31 @@ const StatusCode = require("../helper/status_code_helper");
 
 const patchCreate = async (req, res) => {
   try {
-    const { bundle_id, patch_id, remark } = req.body;
-    if (bundle_id == "" || patch_id == "" || remark == "")
-      return res.json(
-        new StatusCode.INVALID_ARGUMENT("Please provide all required fields")
-      );
-    const result = await Patch.patchCreate(bundle_id, patch_id, remark);
-    res.json(new StatusCode.OK(result));
+    const { bundle_id, patch_id, remark, file_Patch } = req.body;
+    if (bundle_id == "" || patch_id == "" || remark == "" || file_Patch == "")
+      return res.status(400).json("Please provide all required fields");
+
+    const file_PatchDecode = await toBase64(file_Patch);
+
+    const result = await Patch.patchCreate(
+      bundle_id,
+      patch_id,
+      remark,
+      file_PatchDecode
+    );
+    res.status(200).json("New Patch is created.");
+    // res.status(200).json(file_PatchDecode);
   } catch (error) {
-    res.json(new StatusCode.UNKNOWN());
+    res.status(500).json(error);
   }
 };
 
 const patchList = async (req, res) => {
   try {
     const result = await Patch.patchList();
-    res.json(new StatusCode.OK(result));
+    res.status(200).json(result);
   } catch (error) {
-    res.json(new StatusCode.UNKNOWN());
+    res.status(500).json(error);
   }
 };
 
@@ -46,31 +52,30 @@ const patchUpdate = async (req, res) => {
     const { id } = req.params;
 
     if (patch_id == "" || remark == "")
-      return res.json(
-        new StatusCode.INVALID_ARGUMENT("Please provide all required fields")
-      );
+      return res.status(400).json("Please provide all required fields");
+
     const result = await Patch.patchUpdate(id, patch_id, remark);
-    res.json(new StatusCode.OK(result));
+    res.status(200).json(`ID : ${id} Patch is Updated.`);
   } catch (error) {
-    res.json(new StatusCode.UNKNOWN());
+    res.status(500).json(error);
   }
 };
 
 const patchDelete = async (req, res) => {
   try {
     const result = await Patch.patchDelete(req.params.id);
-    res.json(new StatusCode.OK(result));
+    res.status(200).json("Patch is deleted.");
   } catch (error) {
-    res.json(new StatusCode.UNKNOWN());
+    res.status(500).json(error);
   }
 };
 
 const patchByBundle_Id = async (req, res) => {
   try {
     const result = await Patch.patchByBundle_Id(req.params.id);
-    res.json(new StatusCode.OK(result));
+    res.status(200).json(result);
   } catch (error) {
-    res.json(new StatusCode.UNKNOWN());
+    res.status(500).json(error);
   }
 };
 

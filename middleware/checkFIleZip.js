@@ -1,4 +1,6 @@
-const fs = require("fs").promises;
+const fs = require("fs-extra");
+const unzipper = require("unzipper");
+
 
 const checkFileInZip = async (zipFilePath, fileName) => {
   return new Promise((resolve, reject) => {
@@ -19,5 +21,4 @@ const checkFileInZip = async (zipFilePath, fileName) => {
       });
   });
 };
-
 module.exports = checkFileInZip;
