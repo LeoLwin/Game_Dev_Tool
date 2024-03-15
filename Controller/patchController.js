@@ -31,7 +31,6 @@ const patchCreate = async (req, res) => {
       file_PatchDecode
     );
     res.status(200).json("New Patch is created.");
-    // res.status(200).json(file_PatchDecode);
   } catch (error) {
     res.status(500).json(error);
   }

@@ -6,7 +6,8 @@ const multer = require("multer");
 const toDecode = require("../middleware/decodeUnicodeToFile");
 const fileFilter = require("../middleware/isZipFile");
 const deleteFile = require("../middleware/deleteFile");
-const checkFileInZip = require("../middleware/checkFIleZip");
+const checkFileInZip = require("../middleware/checkFIleInZip");
+const saveFileToUploads = require("../middleware/saveFileToUploads");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -96,12 +97,6 @@ const fileDelete = async (req, res) => {
 
 const toBase64 = async (file) => {
   try {
-    // Check if req.file is available
-    // if (!req.body) {
-    //   return res.status(400).json({ message: "No file provided" });
-    // }
-
-    // const file = req.body.file;
     console.log(file);
     const filePath = await toDecode(file);
     const fileNames = ["khl", "gg", "bb"]; // Array of file names to check
@@ -109,8 +104,6 @@ const toBase64 = async (file) => {
     // Check if any file exists in the ZIP archive
     const results = await Promise.all(
       fileNames.map(async (fileName) => {
-        // console.log(fileName);
-        // console.log(filePath);
         return await checkFileInZip(filePath, fileName); // Corrected to return the result
       })
     );
@@ -124,7 +117,10 @@ const toBase64 = async (file) => {
     console.log(allExist);
     if (allExist) {
       // If all files exist and no additional files are present, return success message
-      return filePath;
+      const uploadFilePatch = await saveFileToUploads(file);
+      await deleteFile(filePath);
+
+      return uploadFilePatch;
     } else {
       // If not all files exist or additional files are present, return failure message
       console.log("False");

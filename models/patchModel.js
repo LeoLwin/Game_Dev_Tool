@@ -15,7 +15,7 @@ const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
 
 const patchList = async () => {
   try {
-    const sql = `SELECT * FROM Patch`;
+    const sql = `SELECT * FROM Patch`;  
     const result = await DB.query(sql);
     return result;
   } catch (error) {
