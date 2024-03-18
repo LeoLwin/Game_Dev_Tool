@@ -1,8 +1,8 @@
 const Patch = require("../models/patchModel");
 const unzipper = require("unzipper");
 const { unzip, toBase64, fileDelete } = require("./uploadController");
-const e = require("express");
 const deleteFile = require("../middleware/deleteFile");
+const getFile_Patch = require("../middleware/getFile_Patch");
 
 // const patchCreate = async (req, res) => {
 //   try {
@@ -24,7 +24,7 @@ const patchCreate = async (req, res) => {
     if (bundle_id == "" || patch_id == "" || remark == "" || file_Patch == "")
       return res.status(400).json("Please provide all required fields");
 
-    const file_PatchDecode = await toBase64({ file_Patch, bundle_id });
+    const file_PatchDecode = await getFile_Patch({ file_Patch, bundle_id });
 
     const result = await Patch.patchCreate(
       bundle_id,
@@ -68,11 +68,9 @@ const patchDelete = async (req, res) => {
     console.log(filePatch[0].file_Patch);
     const delFile = await deleteFile(filePatch[0].file_Patch);
     if (delFile) {
-      const result = await Patch.patchDelete(req.params.id);
+      await Patch.patchDelete(req.params.id);
       res.status(200).json("Patch is deleted.");
-      
     }
-    return result;
   } catch (error) {
     res.status(500).json(error);
   }
@@ -86,15 +84,6 @@ const patchByBundle_Id = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
-// const getFile_PathById = async (id) => {
-//   try {
-//     const result = await Patch.getFile_PathById(id);
-//     return result;
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// };
 
 module.exports = {
   patchCreate,
