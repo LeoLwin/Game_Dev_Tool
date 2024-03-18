@@ -4,7 +4,6 @@ const {
   fileUpload,
   fileRead,
   fileDelete,
-  unzip,
   toBase64,
 } = require("../Controller/uploadController");
 
@@ -15,7 +14,6 @@ const {
 router.route("/fileUpload").post(fileUpload);
 router.route("/fileRead").get(fileRead);
 router.route("/fileDelete").delete(fileDelete);
-router.route("/unizp").post(unzip);
 router.route("/toBase64").post(toBase64);
 
 module.exports = router;

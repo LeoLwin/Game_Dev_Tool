@@ -22,7 +22,7 @@ const patchCreate = async (req, res) => {
     if (bundle_id == "" || patch_id == "" || remark == "" || file_Patch == "")
       return res.status(400).json("Please provide all required fields");
 
-    const file_PatchDecode = await toBase64(file_Patch);
+    const file_PatchDecode = await toBase64({ file_Patch, bundle_id });
 
     const result = await Patch.patchCreate(
       bundle_id,
