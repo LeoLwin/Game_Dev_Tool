@@ -1,6 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
+const DB = require("./dbConnection");
 
 require("dotenv").config();
 
