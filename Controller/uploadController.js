@@ -77,10 +77,10 @@ const fileRead = async (req, res) => {
   });
 };
 
-const fileDelete = async (req, res) => {
+const fileDelete = async (path) => {
   try {
-    const filePath = req.body.filePath;
-    fs.unlink(filePath, (err) => {
+    // const filePath = req.body.filePath;
+    fs.unlink(path, (err) => {
       if (err) {
         console.error("Error deleting file:", err);
         // Handle error while deleting file

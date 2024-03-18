@@ -5,7 +5,12 @@ const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
   try {
     const sql =
       "INSERT INTO Patch (bundle_id, patch_id, remark,file_Patch) VALUES(?,?,?,?)";
-    const result = await DB.query(sql, [bundle_id, patch_id, remark, file_PatchDecode]);
+    const result = await DB.query(sql, [
+      bundle_id,
+      patch_id,
+      remark,
+      file_PatchDecode,
+    ]);
     return result;
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
@@ -15,7 +20,7 @@ const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
 
 const patchList = async () => {
   try {
-    const sql = `SELECT * FROM Patch`;  
+    const sql = `SELECT * FROM Patch`;
     const result = await DB.query(sql);
     return result;
   } catch (error) {
@@ -57,10 +62,25 @@ const patchByBundle_Id = async (id) => {
     throw error;
   }
 };
+
+const getFile_PathById = async (id) => {
+  try {
+    // console.log(`Id is ${id}`);
+    const sql = `SELECT file_Patch FROM Patch where id=?`;
+    const result = await DB.query(sql, [id]);
+    // console.log(result);
+    return result;
+  } catch (error) {
+    console.error("Error in Patch Model Create:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   patchCreate,
   patchList,
   patchUpdate,
   patchDelete,
   patchByBundle_Id,
+  getFile_PathById,
 };
