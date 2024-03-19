@@ -6,7 +6,7 @@ const multer = require("multer");
 const toDecode = require("../middleware/decodeUnicodeToFile");
 const fileFilter = require("../middleware/isZipFile");
 const deleteFile = require("../middleware/deleteFile");
-const checkFileInZip = require("../middleware/checkFIleInZip");
+const checkFileInZip = require("../middleware/checkFilesInZip");
 const saveFileToUploads = require("../middleware/saveFileToUploads");
 
 const storage = multer.diskStorage({

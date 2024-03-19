@@ -32,7 +32,6 @@ const bundleList = async (req, res) => {
       return res.status(400).json({ message: "Request Params is empty!" });
     const { page } = req.params;
     const result = await Bundle.bundleList(page);
-    console.log(result);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -69,8 +68,9 @@ const bundleUpdate = async (req, res) => {
 
 const bundleDelete = async (req, res) => {
   try {
+    console.log(`This is bunndle Controller delete ${req.params.id}`);
     const result = await Bundle.bundleDelete(req.params.id);
-    res.json(new StatusCode.OK(result));
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
   }

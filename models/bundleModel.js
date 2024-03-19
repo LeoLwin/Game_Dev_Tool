@@ -1,6 +1,7 @@
 require("dotenv").config();
+const deleteFolder = require("../middleware/deleteFolder");
 const DB = require("./dbConnection");
-const jwt = require("jsonwebtoken");
+const path = require("path");
 
 const bundleCreate = async (
   name,
@@ -19,7 +20,6 @@ const bundleCreate = async (
       orientation,
       index_fileName,
     ]);
-
     return result;
   } catch (error) {
     console.error("Error in Bundle Model Create:", error);
@@ -68,11 +68,17 @@ const bundleUpdate = async (
 
 const bundleDelete = async (id) => {
   try {
+    console.log(`This is bunndle midel delete ${id}`);
     const sql = `DELETE FROM bundle WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [id]);
+
     if (result.affectedRows) {
       message = `Bundle-ID : ${id}  deleted successfully`;
     }
+    const idFolderName = `${id}`;
+    const filePath = path.join(__dirname, "../uploads", idFolderName);
+    await deleteFolder(filePath);
+
     return message;
   } catch (error) {
     console.error("Error in Bundle Model Delete:", error);

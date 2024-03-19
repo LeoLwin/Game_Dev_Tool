@@ -6,7 +6,7 @@ const saveFileToUploads = async (data) => {
   try {
     const { file, id } = data;
     const uid = uuidv4();
-    const idFolderName = `Bundle_Id - ${id}`;
+    const idFolderName = `${id}`;
     const filename = `${uid}`;
     const filePath = path.join(__dirname, "../uploads", idFolderName, filename);
 

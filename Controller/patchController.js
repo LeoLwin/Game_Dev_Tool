@@ -25,14 +25,17 @@ const patchCreate = async (req, res) => {
       return res.status(400).json("Please provide all required fields");
 
     const file_PatchDecode = await getFile_Patch({ file_Patch, bundle_id });
-
-    const result = await Patch.patchCreate(
-      bundle_id,
-      patch_id,
-      remark,
-      file_PatchDecode
-    );
-    res.status(200).json("New Patch is created.");
+    if (file_PatchDecode === null) {
+      res.status(404).json("One or more data is additonal or missing!");
+    } else {
+      try {
+        await Patch.patchCreate(bundle_id, patch_id, remark, file_PatchDecode);
+        res.status(200).json("New Patch is created.");
+      } catch (error) {
+        await deleteFile(file_PatchDecode);
+        res.status(500).json(error);
+      }
+    }
   } catch (error) {
     res.status(500).json(error);
   }
