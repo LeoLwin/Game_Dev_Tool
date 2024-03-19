@@ -1,8 +1,8 @@
 require("dotenv").config();
 const deleteFile = require("../middleware/deleteFile");
-const deleteFolder = require("../middleware/deleteFolder");
 const DB = require("./dbConnection");
 const path = require("path");
+const StatusCode = require("../helper/status_code_helper");
 
 const bundleCreate = async (
   name,
@@ -21,10 +21,9 @@ const bundleCreate = async (
       orientation,
       index_fileName,
     ]);
-    return result;
+    return new StatusCode.OK("New Bundle is created.");
   } catch (error) {
-    console.error("Error in Bundle Model Create:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
@@ -35,10 +34,10 @@ const bundleList = async (pages) => {
     const offset = (page - 1) * PAGE_SIZE;
     const sql = `SELECT * FROM bundle LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
     const result = await DB.query(sql);
-    return result;
+    return new StatusCode.OK(result);
   } catch (error) {
     console.error("Error in Bundle Model List:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
@@ -60,10 +59,10 @@ const bundleUpdate = async (
       index_fileName,
       id,
     ]);
-    return result;
+    return new StatusCode.OK("Bundle is updated");
   } catch (error) {
     console.error("Error in Bundle Model Update:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
@@ -72,7 +71,7 @@ const bundleDelete = async (id) => {
     console.log(`This is bunndle midel delete ${id}`);
     const sql = `DELETE FROM bundle WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [id]);
-
+    let message = "";
     if (result.affectedRows) {
       message = `Bundle-ID : ${id}  deleted successfully`;
     }
@@ -80,10 +79,10 @@ const bundleDelete = async (id) => {
     const filePath = path.join(__dirname, "../uploads", idFolderName);
     await deleteFile(filePath);
 
-    return message;
+    return new StatusCode.OK(message);
   } catch (error) {
     console.error("Error in Bundle Model Delete:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
@@ -95,7 +94,7 @@ const bundleDetail = async (id) => {
     return bundleD;
   } catch (error) {
     console.error("Error in Bundle Model Detail:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 

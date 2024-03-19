@@ -14,7 +14,7 @@ const { route } = require("./bundleRoute");
 // router.use(validateToken);
 
 router.route("/createPatch").post(patchCreate);
-router.route("/listPatch").get(patchList);
+router.route("/listPatch/:page").get(patchList);
 router.route("/updatePatch/:id").put(patchUpdate);
 router.route("/deletePatch/:id").delete(patchDelete);
 router.route("/patchByBundle_Id/:id").get(patchByBundle_Id);

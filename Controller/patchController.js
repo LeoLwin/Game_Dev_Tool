@@ -27,21 +27,29 @@ const patchCreate = async (req, res) => {
       res.status(404).json("One or more data is additonal or missing!");
     } else {
       try {
-        await Patch.patchCreate(bundle_id, patch_id, remark, file_PatchDecode);
-        res.status(200).json("New Patch is created.");
+        const result = await Patch.patchCreate(
+          bundle_id,
+          patch_id,
+          remark,
+          file_PatchDecode
+        );
+        res.json(result);
       } catch (error) {
         await deleteFile(file_PatchDecode);
-        res.status(500).json(error);
+        res.status(error);
       }
     }
   } catch (error) {
-    res.status(500).json(error);
+    res.status(error);
   }
 };
 
 const patchList = async (req, res) => {
   try {
-    const result = await Patch.patchList();
+    if (!req.params)
+      return new StatusCode.INVALID_ARGUMENT("Request Params is empty!");
+    const { page } = req.params;
+    const result = await Patch.patchList(page);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -57,9 +65,9 @@ const patchUpdate = async (req, res) => {
       return res.status(400).json("Please provide all required fields");
 
     const result = await Patch.patchUpdate(id, patch_id, remark);
-    res.status(200).json(`ID : ${id} Patch is Updated.`);
+    res.json(result);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(error);
   }
 };
 
@@ -70,19 +78,20 @@ const patchDelete = async (req, res) => {
     const delFile = await deleteFile(filePatch[0].file_Patch);
     if (delFile) {
       await Patch.patchDelete(req.params.id);
-      res.status(200).json("Patch is deleted.");
     }
+    const result = await Patch.patchDelete(req.params.id);
+    res.json(result);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(error);
   }
 };
 
 const patchByBundle_Id = async (req, res) => {
   try {
     const result = await Patch.patchByBundle_Id(req.params.id);
-    res.status(200).json(result);
+    res.json(result);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(error);
   }
 };
 

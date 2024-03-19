@@ -18,6 +18,7 @@
 // module.exports = deleteFile;
 
 const fs = require("fs-extra");
+const StatusCode = require("../helper/status_code_helper");
 
 const deleteFile = async (filePath) => {
   try {

@@ -16,8 +16,8 @@ const googleCallBack = async (req, res) => {
     // const code = req.query.code;
     const result = await User.googleCallBack(req.query.code);
     // res.status(200).json(result);
-    res.redirect(`http://localhost:5173/${result}`);
-    
+    res.cookie("AccessToken", result);
+    res.redirect(`http://localhost:5173`);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

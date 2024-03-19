@@ -1,5 +1,6 @@
 require("dotenv").config();
 const DB = require("./dbConnection");
+const StatusCode = require("../helper/status_code_helper");
 
 const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
   try {
@@ -11,21 +12,25 @@ const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
       remark,
       file_PatchDecode,
     ]);
-    return result;
+    return new StatusCode.OK("New Patch is Created.");
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
-const patchList = async () => {
+const patchList = async (pages) => {
   try {
-    const sql = `SELECT * FROM Patch`;
+    const page = parseInt(pages);
+    const PAGE_SIZE = 10; // Number of messages per page
+    const offset = (page - 1) * PAGE_SIZE;
+    const sql = `SELECT * FROM Patch LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
+
     const result = await DB.query(sql);
     return result;
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
@@ -34,21 +39,22 @@ const patchUpdate = async (id, patch_id, remark) => {
     console.log(id, patch_id, remark);
     const sql = `UPDATE Patch SET patch_id=?, remark=? WHERE id=?`;
     const result = DB.query(sql, [patch_id, remark, id]);
-    return result;
+    return new StatusCode.OK(`Patch ID - ${id} is updated!`);
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
 const patchDelete = async (id) => {
   try {
+    console.log(id);
     const sql = `DELETE FROM Patch Where id=?`;
     const result = DB.query(sql, [id]);
-    return result;
+    return new StatusCode.OK(`ID ${id} is deleted.`);
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
@@ -56,10 +62,10 @@ const patchByBundle_Id = async (id) => {
   try {
     const sql1 = `SELECT * FROM Patch where bundle_id=?`;
     const result = await DB.query(sql1, [id]);
-    return result;
+    return new StatusCode.OK(result);
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 
@@ -72,7 +78,7 @@ const getFile_PathById = async (id) => {
     return result;
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
-    throw error;
+    return new StatusCode.UNKNOWN(error);
   }
 };
 

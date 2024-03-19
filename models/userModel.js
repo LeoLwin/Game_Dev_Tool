@@ -51,6 +51,8 @@ const googleCallBack = async (code) => {
           process.env.JWT_SECRET,
           { expiresIn: "1h" }
         );
+          
+
         return accessToken;
       } else {
         const sql =
@@ -72,7 +74,7 @@ const googleCallBack = async (code) => {
           process.env.JWT_SECRET,
           { expiresIn: "1h" }
         );
-
+        
         return accessToken;
       }
     } catch (error) {
