@@ -1,14 +1,15 @@
-const fs = require("fs-extra");
+const AdmZip = require("adm-zip");
 
-// Function to count files in a directory
-const countFilesInDirectory = async (directoryPath) => {
+// Function to count files in a zip file
+const countFilesInZip = (zipFilePath) => {
   try {
-    const files = await fs.readdir(directoryPath);
-    return files.length;
+    const zip = new AdmZip(zipFilePath);
+    const zipEntries = zip.getEntries();
+    return zipEntries.length;
   } catch (error) {
-    console.error("Error reading directory:", error);
+    console.error("Error reading zip file:", error);
     throw error;
   }
 };
 
-module.exports = countFilesInDirectory;
+module.exports = countFilesInZip;

@@ -5,7 +5,9 @@ const toDecode = require("../middleware/decodeUnicodeToFile");
 const deleteFile = require("../middleware/deleteFile");
 const checkFilesInZip = require("./checkFilesInZip");
 const saveFileToUploads = require("../middleware/saveFileToUploads");
-const { error } = require("console");
+const countFilesInZip = require("./countFilesInDirectory");
+const { Extract } = require("unzipper");
+const extractZipContents = require("./extractZipContents");
 
 // const getFile_Patch = async (data) => {
 //   try {
@@ -59,14 +61,14 @@ const { error } = require("console");
 //     return { message: error.message };
 //   }
 // };
+
 const getFile_Patch = async (data) => {
   try {
     const { file_Patch, bundle_id } = data;
     const file = file_Patch;
     const id = bundle_id;
-
     const filePath = await toDecode(file);
-    const fileNames = ["khl", "bb"]; // Array of file names to check
+    const fileNames = ["khl", "bb", "gg"]; // Array of file names to check
 
     // Check if any file exists in the ZIP archive
     const results = await Promise.all(
@@ -77,17 +79,24 @@ const getFile_Patch = async (data) => {
       })
     );
 
-    const trueResults = results.filter((result) => result === true || false);
+    const count = await countFilesInZip(filePath);
+    const trueResults = results.filter((result) => result === true);
+    console.log(`Number of file count : ${count}`);
     console.log(`Number of files found: ${trueResults.length}`);
     console.log(`Number of files expected: ${fileNames.length}`);
-    const allExist = trueResults.length === fileNames.length;
+    // Check if count, trueResults.length, and fileNames.length are equal
+    const allExist =
+      count === trueResults.length && trueResults.length === fileNames.length;
 
     if (allExist) {
       // If all files exist and no additional files are present, return success message
-      const uploadFilePatch = await saveFileToUploads({ file, id });
+      const extractfilePatch = await extractZipContents(filePath, id);
+      // const uploadFilePatch = await saveFileToUploads({ file, id });
+      // console.log(uploadFilePatch);
+      console.log(extractfilePatch);
       await deleteFile(filePath);
       console.log("Success");
-      return uploadFilePatch;
+      return extractfilePatch;
     } else {
       // If not all files exist or additional files are present, return failure message
       console.log("False");
@@ -95,6 +104,10 @@ const getFile_Patch = async (data) => {
       return null;
     }
   } catch (error) {
+    if (filePath) {
+      await deleteFile(filePath);
+    }
+
     return null;
   }
 };

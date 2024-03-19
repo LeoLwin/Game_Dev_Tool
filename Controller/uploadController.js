@@ -1,7 +1,6 @@
 require("dotenv").config();
 const fs = require("fs-extra");
 const path = require("path");
-const unzipper = require("unzipper");
 const multer = require("multer");
 const toDecode = require("../middleware/decodeUnicodeToFile");
 const fileFilter = require("../middleware/isZipFile");

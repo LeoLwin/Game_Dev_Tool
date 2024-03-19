@@ -7,7 +7,7 @@ const saveFileToUploads = async (data) => {
     const { file, id } = data;
     const uid = uuidv4();
     const idFolderName = `${id}`;
-    const filename = `${uid}`;
+    const filename = `${uid}.zip`;
     const filePath = path.join(__dirname, "../uploads", idFolderName, filename);
 
     // Check if the file already exists

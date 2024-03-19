@@ -1,4 +1,5 @@
 require("dotenv").config();
+const deleteFile = require("../middleware/deleteFile");
 const deleteFolder = require("../middleware/deleteFolder");
 const DB = require("./dbConnection");
 const path = require("path");
@@ -77,7 +78,7 @@ const bundleDelete = async (id) => {
     }
     const idFolderName = `${id}`;
     const filePath = path.join(__dirname, "../uploads", idFolderName);
-    await deleteFolder(filePath);
+    await deleteFile(filePath);
 
     return message;
   } catch (error) {
