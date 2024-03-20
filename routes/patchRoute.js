@@ -9,9 +9,9 @@ const {
 } = require("../Controller/patchController");
 const { route } = require("./bundleRoute");
 
-// const validateToken = require("../middleware/validateToken");
-// // middleware that is specific to this router
-// router.use(validateToken);
+const validateToken = require("../middleware/validateToken");
+// middleware that is specific to this router
+router.use(validateToken);
 
 router.route("/createPatch").post(patchCreate);
 router.route("/listPatch/:page").get(patchList);
