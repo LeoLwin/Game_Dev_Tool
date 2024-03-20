@@ -8,9 +8,9 @@ const {
   bundleDetail,
 } = require("../Controller/bundleController");
 
-// const validateToken = require("../middleware/validateToken");
-// // middleware that is specific to this router
-// router.use(validateToken);
+const validateToken = require("../middleware/validateToken");
+// middleware that is specific to this router
+router.use(validateToken);
 
 router.route("/createBundle").post(bundleCreate);
 router.route("/listBundle/:page").get(bundleList);

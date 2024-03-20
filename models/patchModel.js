@@ -49,11 +49,9 @@ const patchUpdate = async (id, patch_id, remark) => {
 
 const patchDelete = async (id) => {
   try {
-    console.log(id);
     const sql = `DELETE FROM Patch Where id=?`;
-    const result = DB.query(sql, [id]);
+    const result = await DB.query(sql, [id]);
     console.log(`This is result for delete : ${result}`);
-
     return new StatusCode.OK(`ID ${id} is deleted.`);
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
@@ -72,15 +70,36 @@ const patchByBundle_Id = async (id) => {
   }
 };
 
+// const getFile_PathById = async (id) => {
+//   try {
+//     // console.log(`Id is ${id}`);
+//     const sql = `SELECT file_Patch FROM Patch where id=?`;
+//     const result = await DB.query(sql, [id]);
+//     console.log(`This is moddel Result ${result.data}`);
+//     if (result && result.length === 0) {
+//       console.log("not found");
+//       return new StatusCode.NOT_FOUND(`Not found file Patch`);
+//     }
+//     return result;
+//   } catch (error) {
+//     console.error("Error in Patch Model Create:", error);
+//     return new StatusCode.UNKNOWN(error);
+//   }
+// };
+
 const getFile_PathById = async (id) => {
   try {
     // console.log(`Id is ${id}`);
-    const sql = `SELECT file_Patch FROM Patch where id=?`;
+    const sql = `SELECT file_Patch FROM Patch WHERE id=?`;
     const result = await DB.query(sql, [id]);
-    // console.log(result);
-    return result;
+    if (result && result.length === 0) {
+      return new StatusCode.NOT_FOUND();
+    }
+    // Return the result along with OK status code
+    return new StatusCode.OK(result);
   } catch (error) {
-    console.error("Error in Patch Model Create:", error);
+    console.error("Error in Patch Model getFile_PathById:", error);
+    // Return an UNKNOWN status code with the error
     return new StatusCode.UNKNOWN(error);
   }
 };

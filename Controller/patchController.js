@@ -1,6 +1,7 @@
 const Patch = require("../models/patchModel");
 const deleteFile = require("../middleware/deleteFile");
 const getFile_Patch = require("../middleware/getFile_Patch");
+const StatusCode = require("../helper/status_code_helper");
 
 // const patchCreate = async (req, res) => {
 //   try {
@@ -74,15 +75,23 @@ const patchUpdate = async (req, res) => {
 
 const patchDelete = async (req, res) => {
   try {
-    console.log(req.params.id);
     const filePatch = await Patch.getFile_PathById(req.params.id);
-    console.log(filePatch[0].file_Patch);
-    const delFile = await deleteFile(filePatch[0].file_Patch);
-    if (delFile) {
-      await Patch.patchDelete(req.params.id);
+    if (filePatch.code == 404) {
+      console.log("404");
+      return res.json(new StatusCode.NOT_FOUND("File Path Not Found"));
     }
-    const result = await Patch.patchDelete(req.params.id);
-    res.json(result);
+    if (filePatch.code == 200) {
+      console.log(" 200");
+      const delFile = await deleteFile(filePatch.data[0].file_Patch);
+      console.log(`This is delFiel ${delFile}`);
+      if (delFile) {
+        await Patch.patchDelete(req.params.id);
+      }
+      const result = await Patch.patchDelete(req.params.id);
+      res.json(result);
+    }
+
+    // res.json(filePatch);
   } catch (error) {
     res.status(error);
   }
