@@ -33,6 +33,7 @@ const patchCreate = async (req, res) => {
           remark,
           file_PatchDecode
         );
+        console.log(result);
         res.json(result);
       } catch (error) {
         await deleteFile(file_PatchDecode);
@@ -73,6 +74,7 @@ const patchUpdate = async (req, res) => {
 
 const patchDelete = async (req, res) => {
   try {
+    console.log(req.params.id);
     const filePatch = await Patch.getFile_PathById(req.params.id);
     console.log(filePatch[0].file_Patch);
     const delFile = await deleteFile(filePatch[0].file_Patch);

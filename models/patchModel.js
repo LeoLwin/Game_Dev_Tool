@@ -12,6 +12,7 @@ const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
       remark,
       file_PatchDecode,
     ]);
+    console.log(result);
     return new StatusCode.OK("New Patch is Created.");
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
@@ -51,6 +52,8 @@ const patchDelete = async (id) => {
     console.log(id);
     const sql = `DELETE FROM Patch Where id=?`;
     const result = DB.query(sql, [id]);
+    console.log(`This is result for delete : ${result}`);
+
     return new StatusCode.OK(`ID ${id} is deleted.`);
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
@@ -75,7 +78,7 @@ const getFile_PathById = async (id) => {
     const sql = `SELECT file_Patch FROM Patch where id=?`;
     const result = await DB.query(sql, [id]);
     // console.log(result);
-    return new StatusCode.OK(result);
+    return result;
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
     return new StatusCode.UNKNOWN(error);

@@ -71,6 +71,12 @@ const bundleDelete = async (id) => {
     console.log(`This is bunndle midel delete ${id}`);
     const sql = `DELETE FROM bundle WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [id]);
+
+    // Check if result is null or not
+    if (result === null) {
+      return new StatusCode.NOT_FOUND(`${id}`);
+    }
+
     let message = "";
     if (result.affectedRows) {
       message = `Bundle-ID : ${id}  deleted successfully`;
