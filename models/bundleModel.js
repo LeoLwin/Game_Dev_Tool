@@ -91,7 +91,7 @@ const bundleDetail = async (id) => {
     const sql = `SELECT * FROM bundle WHERE dev_patch_id=?`;
     const result = await DB.query(sql, [id]);
     const bundleD = result[0];
-    return bundleD;
+    return new StatusCode.OK(bundleD);
   } catch (error) {
     console.error("Error in Bundle Model Detail:", error);
     return new StatusCode.UNKNOWN(error);

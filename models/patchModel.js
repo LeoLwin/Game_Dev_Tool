@@ -27,7 +27,7 @@ const patchList = async (pages) => {
     const sql = `SELECT * FROM Patch LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
 
     const result = await DB.query(sql);
-    return result;
+    return new StatusCode.OK(result);
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
     return new StatusCode.UNKNOWN(error);
@@ -75,7 +75,7 @@ const getFile_PathById = async (id) => {
     const sql = `SELECT file_Patch FROM Patch where id=?`;
     const result = await DB.query(sql, [id]);
     // console.log(result);
-    return result;
+    return new StatusCode.OK(result);
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
     return new StatusCode.UNKNOWN(error);
