@@ -67,8 +67,8 @@ const getFile_Patch = async (data) => {
   try {
     const { file_Patch, bundle_id } = data;
     console.log(data);
-    // const file = file_Patch;
-    const file = file_Patch.slice("data:application/zip;base64,".length);
+    const file = file_Patch;
+    // const file = file_Patch.slice("data:application/zip;base64,".length);
     console.log(`1--${file}`);
     const id = bundle_id;
     const filePath = await toDecode(file);
@@ -107,7 +107,9 @@ const getFile_Patch = async (data) => {
       // If not all files exist or additional files are present, return failure message
       console.log("False");
       await deleteFile(filePath);
-      return new StatusCode.INVALID_ARGUMENT(null);
+      return new StatusCode.INVALID_ARGUMENT(
+        "One or more files have either decreased or increased."
+      );
     }
   } catch (error) {
     if (filePath) {

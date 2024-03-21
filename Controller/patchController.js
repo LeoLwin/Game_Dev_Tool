@@ -26,8 +26,11 @@ const patchCreate = async (req, res) => {
     const file_PatchDecode = await getFile_Patch({ file_Patch, bundle_id });
 
     console.log(` This is from PatchCreate - ${file_PatchDecode.code}`);
-    console.log(file_PatchDecode.data);
-    if (file_PatchDecode.code == 200) {
+    console.log(file_PatchDecode.code);
+    console.log(file_PatchDecode);
+    if (file_PatchDecode.code == 400) {
+      res.json(file_PatchDecode);
+    } else if (file_PatchDecode.code == 200) {
       try {
         const result = await Patch.patchCreate(
           bundle_id,
@@ -39,11 +42,8 @@ const patchCreate = async (req, res) => {
         res.json(result);
       } catch (error) {
         await deleteFile(file_PatchDecode);
-
         res.status(error);
       }
-    } else if (file_PatchDecode.code == 400) {
-      res.json(new StatusCode.INVALID_ARGUMENT());
     }
   } catch (error) {
     res.status(error);
