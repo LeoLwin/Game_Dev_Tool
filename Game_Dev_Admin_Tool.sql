@@ -37,11 +37,12 @@ CREATE TABLE `Patch` (
   `update_dateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `remark` varchar(255) DEFAULT NULL,
   `file_Patch` varchar(255) DEFAULT NULL,
+  `environment` enum('development','production') DEFAULT 'development',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_patch_per_bundle` (`bundle_id`,`patch_id`),
   CONSTRAINT `fk_patch_bundle` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`dev_patch_id`),
   CONSTRAINT `Patch_ibfk_1` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`dev_patch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +51,7 @@ CREATE TABLE `Patch` (
 
 LOCK TABLES `Patch` WRITE;
 /*!40000 ALTER TABLE `Patch` DISABLE KEYS */;
-INSERT INTO `Patch` VALUES (2,1,'patch_2','2022-01-02 03:30:00','Remark for patch 2',NULL),(3,2,'patch_3','2022-01-03 03:30:00','Remark for patch 3',NULL),(4,3,'patch_4','2022-01-04 03:30:00','Remark for patch 4',NULL),(5,3,'patch_5','2022-01-05 03:30:00','Remark for patch 5',NULL),(6,1,'Patch555','2024-03-10 13:17:23','kdfkdfkd',NULL),(9,2,'Patch555','2024-03-10 14:21:11','kdfkdfkd',NULL),(10,3,'Patch555','2024-03-10 14:21:34','kdfkdfkd',NULL),(16,3,'kkjddddkjoik','2024-03-13 07:46:13','kdfkdfdfdddddszaakd',NULL),(17,5,'kkjddddkjoik','2024-03-13 08:26:39','kdfkdfdfdddddszaakd',NULL),(18,22,'kkjddddkjoik','2024-03-14 05:37:53','kdfkdfdfdddddszaakd',NULL),(19,22,'kdkfjd','2024-03-14 08:14:17','ggddd',NULL),(21,22,'kfjdkfjdjfd','2024-03-14 08:14:43','ggddd',NULL),(22,12,'kaywkdfdyaw','2024-03-14 08:15:02','kdfkdfdfdddddszaakd',NULL),(23,12,'kfjdkfjdjfd','2024-03-15 09:33:24','ggddfdfddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/temps/decodedFile.zip'),(24,12,'kdfjkdfd','2024-03-15 09:41:57','ggddfdfddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/temps/decodedFile.zip'),(25,2,'kdfjkdfd','2024-03-15 09:43:50','ggddfdfddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/temps/decodedFile.zip'),(27,2,'dfdjfkd','2024-03-15 09:47:33','ggddfdfdfasddffdfsdaddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/temps/decodedFile.zip'),(29,3,'dfddmdnfjfkd','2024-03-15 09:49:23','ggddfdfdfasddffdfsdaddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/decodedFile.zip'),(30,5,'dfddmdnfjfkd','2024-03-15 09:51:38','ggddfdfdfasddffdfsdaddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/decodedFile.zip'),(31,1,'dfddmdnfjfkd','2024-03-15 09:51:53','ggddfdfdfasddffdfsdaddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/decodedFile.zip'),(33,1,'dfddmdkdfkdfdnfjfkd','2024-03-15 09:57:54','ggddfdfdfasddffdfsdaddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/decodedFile.zip'),(34,7,'dfddmdkdfkdfdnfjfkd','2024-03-15 10:01:41','ggddfdfdfasddffdfsdaddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/ddf6cba8-0c30-4c6c-bf35-f29a1e4bf5bc'),(36,7,'dfdddkfkdfdmdkdfkdfdnfjfkd','2024-03-15 10:02:34','ggddfdfdfasddffdfsdaddd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/1d28d34a-a8de-4d97-ae43-09ddb394b60d.zip');
+INSERT INTO `Patch` VALUES (245,46,'kaywkdfdyaw','2024-03-21 05:00:26','kaungHtetLwin','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/46/extract-462de2ae7b-8ce9-401a-b7d3-f1128b21bc82','production'),(246,45,'ah82','2024-03-21 05:01:59','ddad','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/45/extract-4510abf9e1-ad53-4ca1-b457-8bfe675e1e77','development'),(247,46,'20240321113350','2024-03-21 05:04:27','dfd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/46/extract-46f4d95f24-bdd3-4852-9a59-3db1dec104a5','development');
 /*!40000 ALTER TABLE `Patch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +70,7 @@ CREATE TABLE `bundle` (
   `orientation` varchar(255) NOT NULL,
   `index_fileName` varchar(255) NOT NULL,
   PRIMARY KEY (`dev_patch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +79,7 @@ CREATE TABLE `bundle` (
 
 LOCK TABLES `bundle` WRITE;
 /*!40000 ALTER TABLE `bundle` DISABLE KEYS */;
-INSERT INTO `bundle` VALUES ('testtesttest','cocos','a/a/ikop=/a/',1,'kdfddkk','kkkkkkkiue41fdfd'),('Bundle 2','cocos','prod_path_2',2,'orientation_2','index_fileName_2'),('ballodddn','cocos','a/a/a/a/',3,'kkk','kkkkkkkfdfd'),('mawmawd','cocos','a/a/ikop=/a/',5,'kdfddkk','kkkkkkkiue41fdfd'),('zaw','cocos','a/a/a/a/',6,'kkkk','kkkkkkkfdfd'),('john','cocos','a/a/a/a/',7,'kkkk','kkkkkkkfdfd'),('marry','cocos','a/a/a/a/',8,'kkkk','kkkkkkkfdfd'),('ballon','cocos','a/a/a/a/',9,'kkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',10,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',11,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',12,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',13,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',14,'kkkk','kkkkkkkfdfd'),('gigi','cocos','a/a/a/a/',15,'kkkk','ddfdfd'),('gigi','cocos','a/a/a/a/',16,'kkkk','ddfdfd'),('htay','cocos','a/a/admfd/a/',17,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',18,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',19,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',20,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',21,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',22,'kkkk','dfdf'),('htay','cocos','a/a/admfd/a/',23,'kkddkk','dfdf'),('htay','cocos','a/a/admfd/a/',24,'kkddkk','dfdf'),('htay','cocos','a/a/admfd/a/',25,'kkddkk','dfdf'),('girod','web','a/a/admfd/a/',26,'kkddkoosk','dfjyufdkqlkdf'),('myo','web','a/a/admfd/a/',27,'kkkk','dfdf'),('girod','web','a/a/admfd/a/',28,'kkddkoosk','dfjyufdkqlkdf'),('testtesttest','cocos','a/a/ikop=/a/',29,'kdfddkk','kkkkkkkiue41fdfd'),('hdfaldkfad','web','a/a/admfd/a/',30,'kkkk','dfdf'),('hdfaldkfad','web','a/a/admfd/a/',31,'kkkk','dfdf'),('hdfaldkfad','web','a/a/admfd/a/',32,'kkkk','dfdf'),('hdfaldkfad','web','a/a/admfd/a/',33,'kkkk','dfdf');
+INSERT INTO `bundle` VALUES ('jjcocos','cocos','a/a/ikop=/a/',45,'kdfddkk','kkkkkkkiue41fdfd'),('thae','cocos','a/a/admfd/a/',46,'kkkk','dfdf'),('thae','cocos','a/a/admfd/a/',47,'kkkk','dfdf'),('bab','cocos','a/a/admfd/a/',48,'kkddkoosk','dfjyufdkqlkdf');
 /*!40000 ALTER TABLE `bundle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +97,7 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `provider` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +106,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (15,'Kaung Htet Lwin','112623038719113060534','phoekaung.3819@gmail.com','Google'),(16,'Kaung Htet Lwin','116111139988458233705','kaunghtet206@gmail.com','Google'),(17,'Kaung Htet Lwin','102833081139937242272','kaunghtetlwin982@gmail.com','Google');
+INSERT INTO `user` VALUES (18,'Kaung Htet Lwin','112623038719113060534','phoekaung.3819@gmail.com','Google'),(19,'Kaung Htet Lwin','116111139988458233705','kaunghtet206@gmail.com','Google'),(20,'Thiri Shwesin','105180924494579800087','thirihaha@gmail.com','Google');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -118,4 +119,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-15 17:15:27
+-- Dump completed on 2024-03-21 11:37:02
