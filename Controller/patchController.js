@@ -22,24 +22,28 @@ const patchCreate = async (req, res) => {
     const { bundle_id, patch_id, remark, file_Patch } = req.body;
     if (bundle_id == "" || patch_id == "" || remark == "" || file_Patch == "")
       return res.status(400).json("Please provide all required fields");
-
+    console.log(req.body);
     const file_PatchDecode = await getFile_Patch({ file_Patch, bundle_id });
-    if (file_PatchDecode === null) {
-      res.status(404).json("One or more data is additonal or missing!");
-    } else {
+
+    console.log(` This is from PatchCreate - ${file_PatchDecode.code}`);
+    console.log(file_PatchDecode.data);
+    if (file_PatchDecode.code == 200) {
       try {
         const result = await Patch.patchCreate(
           bundle_id,
           patch_id,
           remark,
-          file_PatchDecode
+          file_PatchDecode.data
         );
         console.log(result);
         res.json(result);
       } catch (error) {
         await deleteFile(file_PatchDecode);
+
         res.status(error);
       }
+    } else if (file_PatchDecode.code == 400) {
+      res.json(new StatusCode.INVALID_ARGUMENT());
     }
   } catch (error) {
     res.status(error);
@@ -60,13 +64,13 @@ const patchList = async (req, res) => {
 
 const patchUpdate = async (req, res) => {
   try {
-    const { patch_id, remark } = req.body;
+    const { patch_id, remark, environment } = req.body;
     const { id } = req.params;
 
-    if (patch_id == "" || remark == "")
+    if (patch_id == "" || remark == "" || environment == "")
       return res.status(400).json("Please provide all required fields");
 
-    const result = await Patch.patchUpdate(id, patch_id, remark);
+    const result = await Patch.patchUpdate(id, patch_id, remark, environment);
     res.json(result);
   } catch (error) {
     res.status(error);
@@ -90,8 +94,6 @@ const patchDelete = async (req, res) => {
       const result = await Patch.patchDelete(req.params.id);
       res.json(result);
     }
-
-    // res.json(filePatch);
   } catch (error) {
     res.status(error);
   }

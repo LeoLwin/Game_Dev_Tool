@@ -8,6 +8,7 @@ const saveFileToUploads = require("../middleware/saveFileToUploads");
 const countFilesInZip = require("./countFilesInDirectory");
 const { Extract } = require("unzipper");
 const extractZipContents = require("./extractZipContents");
+const StatusCode = require("../helper/status_code_helper");
 
 // const getFile_Patch = async (data) => {
 //   try {
@@ -65,9 +66,13 @@ const extractZipContents = require("./extractZipContents");
 const getFile_Patch = async (data) => {
   try {
     const { file_Patch, bundle_id } = data;
-    const file = file_Patch;
+    console.log(data);
+    // const file = file_Patch;
+    const file = file_Patch.slice("data:application/zip;base64,".length);
+    console.log(`1--${file}`);
     const id = bundle_id;
     const filePath = await toDecode(file);
+    console.log(`2-- ${filePath}`);
     const fileNames = ["khl", "bb", "gg"]; // Array of file names to check
 
     // Check if any file exists in the ZIP archive
@@ -78,6 +83,7 @@ const getFile_Patch = async (data) => {
         return result;
       })
     );
+    console.log(`${results}`);
 
     const count = await countFilesInZip(filePath);
     const trueResults = results.filter((result) => result === true);
@@ -96,19 +102,19 @@ const getFile_Patch = async (data) => {
       console.log(extractfilePatch);
       await deleteFile(filePath);
       console.log("Success");
-      return extractfilePatch;
+      return new StatusCode.OK(extractfilePatch);
     } else {
       // If not all files exist or additional files are present, return failure message
       console.log("False");
       await deleteFile(filePath);
-      return null;
+      return new StatusCode.INVALID_ARGUMENT(null);
     }
   } catch (error) {
     if (filePath) {
       await deleteFile(filePath);
     }
 
-    return null;
+    return new StatusCode.UNKNOWN(null);
   }
 };
 

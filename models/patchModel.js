@@ -35,11 +35,11 @@ const patchList = async (pages) => {
   }
 };
 
-const patchUpdate = async (id, patch_id, remark) => {
+const patchUpdate = async (id, patch_id, remark, environment) => {
   try {
-    console.log(id, patch_id, remark);
-    const sql = `UPDATE Patch SET patch_id=?, remark=? WHERE id=?`;
-    const result = DB.query(sql, [patch_id, remark, id]);
+    console.log(id, patch_id, remark, environment);
+    const sql = `UPDATE Patch SET patch_id=?, remark=?, environment=? WHERE id=?`;
+    const result = DB.query(sql, [patch_id, remark, environment, id]);
     return new StatusCode.OK(`Patch ID - ${id} is updated!`);
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
