@@ -34,7 +34,13 @@ const bundleList = async (pages) => {
     const offset = (page - 1) * PAGE_SIZE;
     const sql = `SELECT * FROM bundle LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
     const result = await DB.query(sql);
-    return new StatusCode.OK(result);
+
+    // Query to count total number of bundles
+    const countSql = "SELECT COUNT(*) AS total FROM bundle";
+    const countResult = await DB.query(countSql);
+    const total = countResult[0].total;
+
+    return new StatusCode.OK(result, total);
   } catch (error) {
     console.error("Error in Bundle Model List:", error);
     return new StatusCode.UNKNOWN(error);
