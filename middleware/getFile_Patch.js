@@ -67,8 +67,8 @@ const getFile_Patch = async (data) => {
   try {
     const { file_Patch, bundle_id } = data;
     console.log(data);
-    const file = file_Patch;
-    // const file = file_Patch.slice("data:application/zip;base64,".length);
+    // const file = file_Patch;
+    const file = file_Patch.slice("data:application/zip;base64,".length);
     console.log(`1--${file}`);
     const id = bundle_id;
     const filePath = await toDecode(file);
