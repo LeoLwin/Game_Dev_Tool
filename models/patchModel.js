@@ -69,7 +69,14 @@ const patchByBundle_Id = async (id) => {
   try {
     const sql1 = `SELECT * FROM Patch where bundle_id=?`;
     const result = await DB.query(sql1, [id]);
-    return new StatusCode.OK(result);
+
+    // Query to count total number of bundles
+    const countSql = "SELECT COUNT(*) AS total FROM Patch WHERE bundle_id=?";
+    const countResult = await DB.query(countSql, [id]);
+    const total = countResult[0].total;
+    console.log(total);
+
+    return new StatusCode.OK({ result, total });
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
     return new StatusCode.UNKNOWN(error);
@@ -101,6 +108,7 @@ const getFile_PathById = async (id) => {
     if (result && result.length === 0) {
       return new StatusCode.NOT_FOUND();
     }
+
     // Return the result along with OK status code
     return new StatusCode.OK(result);
   } catch (error) {
