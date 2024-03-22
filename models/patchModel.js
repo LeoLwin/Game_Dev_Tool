@@ -27,14 +27,14 @@ const patchList = async (pages) => {
     const PAGE_SIZE = 10; // Number of messages per page
     const offset = (page - 1) * PAGE_SIZE;
     const sql = `SELECT * FROM Patch ORDER BY id DESC LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
-    const result = await DB.query(sql);
+    const list = await DB.query(sql);
 
     // Query to count total number of bundles
     const countSql = "SELECT COUNT(*) AS total FROM Patch";
     const countResult = await DB.query(countSql);
     const total = countResult[0].total;
 
-    return new StatusCode.OK({ result, total });
+    return new StatusCode.OK({ list, total });
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
     return new StatusCode.UNKNOWN(error);
@@ -68,7 +68,7 @@ const patchDelete = async (id) => {
 const patchByBundle_Id = async (id) => {
   try {
     const sql1 = `SELECT * FROM Patch where bundle_id=?`;
-    const result = await DB.query(sql1, [id]);
+    const list = await DB.query(sql1, [id]);
 
     // Query to count total number of bundles
     const countSql = "SELECT COUNT(*) AS total FROM Patch WHERE bundle_id=?";
@@ -76,7 +76,7 @@ const patchByBundle_Id = async (id) => {
     const total = countResult[0].total;
     console.log(total);
 
-    return new StatusCode.OK({ result, total });
+    return new StatusCode.OK({ list, total });
   } catch (error) {
     console.error("Error in Patch Model Create:", error);
     return new StatusCode.UNKNOWN(error);

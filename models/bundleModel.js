@@ -33,14 +33,14 @@ const bundleList = async (pages) => {
     const PAGE_SIZE = 10; // Number of messages per page
     const offset = (page - 1) * PAGE_SIZE;
     const sql = `SELECT * FROM bundle ORDER BY dev_patch_id DESC LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
-    const result = await DB.query(sql);
+    const list = await DB.query(sql);
 
     // Query to count total number of bundles
     const countSql = "SELECT COUNT(*) AS total FROM bundle";
     const countResult = await DB.query(countSql);
     const total = countResult[0].total;
-s
-    return new StatusCode.OK(result, total);
+
+    return new StatusCode.OK({ list, total });
   } catch (error) {
     console.error("Error in Bundle Model List:", error);
     return new StatusCode.UNKNOWN(error);
