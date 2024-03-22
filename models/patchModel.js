@@ -66,14 +66,13 @@ const patchDelete = async (id) => {
 
 const patchByBundle_Id = async (id) => {
   try {
-    const sql1 = `SELECT * FROM Patch WHERE bundle_id = 53 ORDER BY id DESC;`;
+    const sql1 = `SELECT * FROM Patch WHERE bundle_id =? ORDER BY id DESC;`;
     const list = await DB.query(sql1, [id]);
 
     // Query to count total number of bundles
     const countSql = "SELECT COUNT(*) AS total FROM Patch WHERE bundle_id=?";
     const countResult = await DB.query(countSql, [id]);
     const total = countResult[0].total;
-    console.log(total);
 
     return new StatusCode.OK({ list, total });
   } catch (error) {
