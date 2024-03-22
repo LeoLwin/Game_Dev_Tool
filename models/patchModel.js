@@ -1,6 +1,7 @@
 require("dotenv").config();
 const DB = require("./dbConnection");
 const StatusCode = require("../helper/status_code_helper");
+const { configDotenv } = require("dotenv");
 
 const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
   try {
@@ -104,6 +105,43 @@ const getFile_PathById = async (id) => {
   }
 };
 
+const patchDetail = async (id) => {
+  try {
+    const sql = `SELECT * FROM Patch WHERE id=?`;
+    const result = await DB.query(sql, [id]);
+    return new StatusCode.OK(result[0]);
+  } catch (error) {
+    return new StatusCode.NOT_FOUND(error);
+  }
+};
+
+const updateEnvironment = async (id) => {
+  try {
+    const patch = await patchDetail(id);
+    const env = patch.data.environment;
+    console.log(env);
+    switch (env) {
+      case "development":
+        console.log("This is development");
+        const environment = "production";
+        const sql = `UPDATE Patch SET environment=? WHERE id=?`;
+        const result = await DB.query(sql, [environment, id]);
+        return new StatusCode.OK(result);
+      case "production":
+        console.log("This is production");
+        const environment1 = "development";
+        const sql1 = `UPDATE Patch SET environment=? WHERE id=?`;
+        const result1 = await DB.query(sql1, [environment1, id]);
+        return new StatusCode.OK(result1);
+      default:
+        return new StatusCode.INVALID_ARGUMENT("Unknown environment");
+    }
+  } catch (error) {
+    console.error("Error in Patch Model updateEnvironment:", error);
+    return new StatusCode.UNKNOWN(error);
+  }
+};
+
 module.exports = {
   patchCreate,
   patchList,
@@ -111,4 +149,5 @@ module.exports = {
   patchDelete,
   patchByBundle_Id,
   getFile_PathById,
+  updateEnvironment,
 };

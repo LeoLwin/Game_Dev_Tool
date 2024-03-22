@@ -56,9 +56,9 @@ const patchList = async (req, res) => {
       return new StatusCode.INVALID_ARGUMENT("Request Params is empty!");
     const { page } = req.params;
     const result = await Patch.patchList(page);
-    res.status(200).json(result);
+    res.json(result);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(error);
   }
 };
 
@@ -108,10 +108,21 @@ const patchByBundle_Id = async (req, res) => {
   }
 };
 
+const updateEnvironment = async (req, res) => {
+  try {
+    console.log("Update Environment" + req.params.id);
+    const result = await Patch.updateEnvironment(req.params.id);
+    res.json(result);
+  } catch (error) {
+    res.status(error);
+  }
+};
+
 module.exports = {
   patchCreate,
   patchList,
   patchUpdate,
   patchDelete,
   patchByBundle_Id,
+  updateEnvironment,
 };

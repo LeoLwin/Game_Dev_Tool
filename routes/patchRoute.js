@@ -6,6 +6,7 @@ const {
   patchUpdate,
   patchDelete,
   patchByBundle_Id,
+  updateEnvironment,
 } = require("../Controller/patchController");
 
 const validateToken = require("../middleware/validateToken");
@@ -17,5 +18,6 @@ router.route("/listPatch/:page").get(patchList);
 router.route("/updatePatch/:id").put(patchUpdate);
 router.route("/deletePatch/:id").delete(patchDelete);
 router.route("/patchByBundle_Id/:id").get(patchByBundle_Id);
+router.route("/updateEnvironemnt/:id").get(updateEnvironment);
 
 module.exports = router;
