@@ -1,36 +1,6 @@
 const Bundle = require("../models/bundleModel");
 const StatusCode = require("../helper/status_code_helper");
 
-// const bundleCreate = async (req, res) => {
-//   try {
-//     const { name, type, prod_patch_id, orientation, index_fileName } = req.body;
-
-//     if (
-//       name === "" ||
-//       type === "" ||
-//       prod_patch_id === "" ||
-//       orientation === "" ||
-//       index_fileName === ""
-//     ) {
-//       // return res.status(400).json("Please provide all required fields");
-//       return new StatusCode.INVALID_ARGUMENT(
-//         "Please provide all required fields"
-//       );
-//     }
-//     const result = await Bundle.bundleCreate(
-//       name,
-//       type,
-//       prod_patch_id,
-//       orientation,
-//       index_fileName
-//     );
-//     // res.status(200).json("New Bundle is created.");
-//     return new StatusCode.OK("New Bundle is created.");
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// };
-
 const bundleCreate = async (req, res) => {
   try {
     const { name, type, prod_patch_id, orientation, index_fileName } = req.body;

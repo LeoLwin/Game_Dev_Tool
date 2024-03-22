@@ -1,7 +1,6 @@
 require("dotenv").config();
 const DB = require("./dbConnection");
 const StatusCode = require("../helper/status_code_helper");
-const { configDotenv } = require("dotenv");
 
 const patchCreate = async (bundle_id, patch_id, remark, file_PatchDecode) => {
   try {
@@ -82,23 +81,6 @@ const patchByBundle_Id = async (id) => {
     return new StatusCode.UNKNOWN(error);
   }
 };
-
-// const getFile_PathById = async (id) => {
-//   try {
-//     // console.log(`Id is ${id}`);
-//     const sql = `SELECT file_Patch FROM Patch where id=?`;
-//     const result = await DB.query(sql, [id]);
-//     console.log(`This is moddel Result ${result.data}`);
-//     if (result && result.length === 0) {
-//       console.log("not found");
-//       return new StatusCode.NOT_FOUND(`Not found file Patch`);
-//     }
-//     return result;
-//   } catch (error) {
-//     console.error("Error in Patch Model Create:", error);
-//     return new StatusCode.UNKNOWN(error);
-//   }
-// };
 
 const getFile_PathById = async (id) => {
   try {

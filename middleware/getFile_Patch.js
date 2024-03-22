@@ -10,59 +10,6 @@ const { Extract } = require("unzipper");
 const extractZipContents = require("./extractZipContents");
 const StatusCode = require("../helper/status_code_helper");
 
-// const getFile_Patch = async (data) => {
-//   try {
-//     const { file_Patch, bundle_id } = data;
-//     const file = file_Patch;
-//     const id = bundle_id;
-
-//     const filePath = await toDecode(file);
-//     const fileNames = ["khl", "gg", "bb", "bf"]; // Array of file names to check
-
-//     // Check if any file exists in the ZIP archive
-//     const results = await Promise.all(
-//       fileNames.map(async (fileName) => {
-//         const result = await checkFilesInZip(filePath, fileName); // Corrected to return the result
-//         console.log(`This is isisisi ${fileName} : ${result}`);
-//         return result;
-//       })
-//     );
-//     console.log(`This is results : ${results}`);
-//     console.log(`This is resluts.length : ${results.length}`);
-//     console.log(`This is fileNames.length : ${fileNames.length}`);
-//     // Check if all files exist and no additional files are present
-
-//     console.log(`Results: ${results}`);
-
-//     const trueResults = results.filter((result) => result === true);
-//     console.log(`True results: ${trueResults}`);
-
-//     console.log(`Number of files found: ${trueResults.length}`);
-//     console.log(`Number of files found: ${fileNames.length}`);
-//     const allExist = trueResults.length === fileNames.length;
-
-//     // const allExist =
-//     //   results.every((result) => result) && results.length === fileNames.length;
-//     console.log(allExist);
-
-//     if (allExist) {
-//       // If all files exist and no additional files are present, return success message
-//       const uploadFilePatch = await saveFileToUploads({ file, id });
-//       await deleteFile(filePath);
-//       console.log("Successd");
-//       return uploadFilePatch;
-//     } else {
-//       // If not all files exist or additional files are present, return failure message
-//       console.log("False");
-//       throw new Error(
-//         "One or more required files are missing or additional files exist"
-//       );
-//     }
-//   } catch (error) {
-//     return { message: error.message };
-//   }
-// };
-
 const getFile_Patch = async (data) => {
   try {
     const { file_Patch, bundle_id } = data;

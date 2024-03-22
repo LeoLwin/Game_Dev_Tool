@@ -3,20 +3,6 @@ const deleteFile = require("../middleware/deleteFile");
 const getFile_Patch = require("../middleware/getFile_Patch");
 const StatusCode = require("../helper/status_code_helper");
 
-// const patchCreate = async (req, res) => {
-//   try {
-//     const { bundle_id, patch_id, remark } = req.body;
-//     if (bundle_id == "" || patch_id == "" || remark == "")
-//       return res
-//         .status(400)
-//         .json({ message: "Please provide all required fields" });
-//     const result = await Patch.patchCreate(bundle_id, patch_id, remark);
-//     res.status(200).json(result);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
 const patchCreate = async (req, res) => {
   try {
     const { bundle_id, patch_id, remark, file_Patch } = req.body;
