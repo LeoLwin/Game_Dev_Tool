@@ -8,11 +8,7 @@ const deleteFile = require("../middleware/deleteFile");
 const checkFileInZip = require("../middleware/checkFilesInZip");
 const saveFileToUploads = require("../middleware/saveFileToUploads");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    // Specify the destination folder for uploaded files
-    cb(null, "./uploads");
-  },
+co
   filename: function (req, file, cb) {
     // Specify the filename for uploaded files
     cb(null, file.originalname);
