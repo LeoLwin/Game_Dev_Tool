@@ -39,7 +39,7 @@ const bundleList = async (pages) => {
     const countSql = "SELECT COUNT(*) AS total FROM bundle";
     const countResult = await DB.query(countSql);
     const total = countResult[0].total;
-
+s
     return new StatusCode.OK(result, total);
   } catch (error) {
     console.error("Error in Bundle Model List:", error);
