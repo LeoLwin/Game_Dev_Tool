@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `Game_Dev_Admin_Tool`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `Game_Dev_Admin_Tool` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-
-USE `Game_Dev_Admin_Tool`;
-
---
 -- Table structure for table `Patch`
 --
 
@@ -42,7 +34,7 @@ CREATE TABLE `Patch` (
   UNIQUE KEY `unique_patch_per_bundle` (`bundle_id`,`patch_id`),
   CONSTRAINT `fk_patch_bundle` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`dev_patch_id`),
   CONSTRAINT `Patch_ibfk_1` FOREIGN KEY (`bundle_id`) REFERENCES `bundle` (`dev_patch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=286 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +43,7 @@ CREATE TABLE `Patch` (
 
 LOCK TABLES `Patch` WRITE;
 /*!40000 ALTER TABLE `Patch` DISABLE KEYS */;
-INSERT INTO `Patch` VALUES (245,46,'kaywkdfdyaw','2024-03-21 05:00:26','kaungHtetLwin','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/46/extract-462de2ae7b-8ce9-401a-b7d3-f1128b21bc82','production'),(246,45,'ah82','2024-03-21 05:01:59','ddad','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/45/extract-4510abf9e1-ad53-4ca1-b457-8bfe675e1e77','development'),(247,46,'20240321113350','2024-03-21 05:04:27','dfd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/46/extract-46f4d95f24-bdd3-4852-9a59-3db1dec104a5','development');
+INSERT INTO `Patch` VALUES (247,46,'kaywkdfdyaw','2024-03-21 05:04:27','kaungHtetLwin','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/46/extract-46f4d95f24-bdd3-4852-9a59-3db1dec104a5','production'),(264,47,'ay82','2024-03-21 08:48:17','ddad','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/47/extract-47e8587db9-b0a7-43b9-9dae-baeca515ee0d','development'),(265,48,'ay82','2024-03-21 08:49:20','ddad','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/48/extract-481634f612-14a1-4aaf-a340-bef052003045','production'),(266,45,'20240321151637','2024-03-21 08:49:27','dfdf','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/45/extract-45666ee4e4-2782-4691-b6bd-ba524501b04f','development'),(269,45,'20240321153025','2024-03-21 09:00:32','dsfsfds','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/45/extract-45264a4ac7-54c5-48be-af3b-737eacd96a8b','development'),(271,45,'20240321152815','2024-03-21 09:06:32','TTUYTUYT','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/45/extract-4504c769de-665d-4f65-871b-0d1cdbe2ef83','development'),(272,47,'20240321152815','2024-03-21 09:06:52','TTUYTUYT','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/47/extract-47931b7eac-6eff-47e6-9656-71ec48d9c370','development'),(274,48,'20240321152815','2024-03-21 09:08:50','TTUYTUYT','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/48/extract-483c9a98e9-b400-4363-9b96-5740ee572c81','development'),(275,54,'20240322105456','2024-03-22 04:25:04','fads','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/54/extract-545595d0c5-dcf3-464c-840c-c144047131d9','development'),(277,54,'20240322105550','2024-03-22 04:26:02','dfasdfas','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/54/extract-541122950b-e090-4bb6-b5bb-395de3a06891','development'),(281,54,'20240322110338','2024-03-22 04:34:24','dfdferet','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/54/extract-54c5daa490-4726-4a79-8823-ed10fd8c4350','development'),(284,54,'20240322111721','2024-03-22 04:47:45','dfdsfas','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/54/extract-541e985460-cc86-4c5b-8736-d10660d3c44b','development'),(285,53,'20240322111844','2024-03-22 04:48:50','dfsd','/media/kaunghtetlwin/2AF88162F8812D5F/StudioAMK/Game_Dev_Admin_Tool_Server/uploads/53/extract-53412e9dda-5ba3-4276-a64f-7175279e4733','development');
 /*!40000 ALTER TABLE `Patch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +62,7 @@ CREATE TABLE `bundle` (
   `orientation` varchar(255) NOT NULL,
   `index_fileName` varchar(255) NOT NULL,
   PRIMARY KEY (`dev_patch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +71,7 @@ CREATE TABLE `bundle` (
 
 LOCK TABLES `bundle` WRITE;
 /*!40000 ALTER TABLE `bundle` DISABLE KEYS */;
-INSERT INTO `bundle` VALUES ('jjcocos','cocos','a/a/ikop=/a/',45,'kdfddkk','kkkkkkkiue41fdfd'),('thae','cocos','a/a/admfd/a/',46,'kkkk','dfdf'),('thae','cocos','a/a/admfd/a/',47,'kkkk','dfdf'),('bab','cocos','a/a/admfd/a/',48,'kkddkoosk','dfjyufdkqlkdf');
+INSERT INTO `bundle` VALUES ('jjcocos','cocos','a/a/ikop=/a/',45,'kdfddkk','kkkkkkkiue41fdfd'),('thae','cocos','a/a/admfd/a/',46,'kkkk','dfdf'),('thae','cocos','a/a/admfd/a/',47,'kkkk','dfdf'),('bab','cocos','a/a/admfd/a/',48,'kkddkoosk','dfjyufdkqlkdf'),('Shan','cocos','a/a/admfd/a/',49,'kkkk','dfdf'),('kyawzawya','web','fdfd',50,'dfd','dsfdffd'),('winwin','web','dfdf',51,'dfdfd','dfdfd'),('ggi','web','asd',52,'dss','fsd'),('dfdfd','web','dfd',53,'dfdf','fdsf'),('dfdf','cocos','dfdf',54,'dfdfsd','dsfdsfad');
 /*!40000 ALTER TABLE `bundle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,4 +111,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-21 11:37:02
+-- Dump completed on 2024-03-22 11:31:36
