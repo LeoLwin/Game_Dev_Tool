@@ -26,7 +26,7 @@ const patchList = async (pages) => {
     const page = parseInt(pages);
     const PAGE_SIZE = 10; // Number of messages per page
     const offset = (page - 1) * PAGE_SIZE;
-    const sql = `SELECT * FROM Patch LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
+    const sql = `SELECT * FROM Patch ORDER BY id DESC LIMIT ${PAGE_SIZE} OFFSET ${offset}`;
 
     const result = await DB.query(sql);
     return new StatusCode.OK(result);
