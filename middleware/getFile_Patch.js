@@ -62,7 +62,6 @@ const getFile_Patch = async (data) => {
     if (filePath) {
       await deleteFile(filePath);
     }
-
     return new StatusCode.UNKNOWN(null);
   }
 };

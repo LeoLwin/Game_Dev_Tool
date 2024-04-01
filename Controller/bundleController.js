@@ -23,7 +23,7 @@ const bundleCreate = async (req, res) => {
       orientation,
       index_fileName
     );
-    res.json(result);
+    res.json(result); 
   } catch (error) {
     res.status(error);
   }
