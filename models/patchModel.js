@@ -112,6 +112,7 @@ const patchDetail = async (id) => {
 const updateEnvironment = async (id) => {
   try {
     const patch = await patchDetail(id);
+    console.log(patch)
     const env = patch.data.environment;
     console.log(env);
     switch (env) {

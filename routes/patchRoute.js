@@ -18,6 +18,8 @@ router.route("/listPatch/:page").get(patchList);
 router.route("/updatePatch/:id").put(patchUpdate);
 router.route("/deletePatch/:id").delete(patchDelete); 
 router.route("/patchByBundle_Id/:id").get(patchByBundle_Id);
-router.route("/updateEnvironemnt/:id").get(updateEnvironment);
+router.route("/updateEnvironemnt/:id").patch(updateEnvironment);
+
 
 module.exports = router;
+  
